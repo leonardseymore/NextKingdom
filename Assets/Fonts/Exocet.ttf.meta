@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a212abcfc1bc5244d82da3d3c99702c7
+timeCreated: 1486578377
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Exocet OTCECY
+  fontNames:
+  - Exocet OTCECY
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

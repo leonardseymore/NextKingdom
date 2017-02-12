@@ -1,0 +1,465 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public partial class Game : MonoBehaviour {
+    int NumActions = 0;
+    int Direction = 1;
+    int CurrentPlayerIdx;
+    int MyPlayerIdx;
+    int NumPlayers = 4;
+    int WinningScore = 50;
+
+    List<Seat> Seats = new List<Seat>();
+
+    bool IsMyTurn
+    {
+        get
+        {
+            return CurrentPlayerIdx == MyPlayerIdx;
+        }
+    }
+
+    List<Card> CurrentPlayerCards
+    {
+        get
+        {
+            return Seats[CurrentPlayerIdx].Cards;
+        }
+    }
+
+    Seat CurrentPlayer
+    {
+        get
+        {
+            return Seats[CurrentPlayerIdx];
+        }
+    }
+
+    Seat Me
+    {
+        get
+        {
+            return Seats[MyPlayerIdx];
+        }
+    }
+
+    List<Card> MyCards
+    {
+        get
+        {
+            return Me.Cards;
+        }
+    }
+
+    bool CurrentPlayerHasCards
+    {
+        get
+        {
+            return CurrentPlayerCards.Count > 0;
+        }
+    }
+
+    class Seat : IComparable<Seat>
+    {
+        public int PlayerIdx;
+        public PlayerType PlayerType;
+        public List<Card> Cards;
+        public CardHolder Tableau;
+        public PlayerAvatar PlayerAvatar;
+        public int HandValue;
+        public int Score;
+
+        public int AvailableRuins
+        {
+            get
+            {
+                return PlayerAvatar.AvailableRuins;
+            }
+            set
+            {
+                PlayerAvatar.AvailableRuins = value;
+            }
+        }
+
+        bool _eliminated;
+        public bool Eliminated
+        {
+            get
+            {
+                return _eliminated;
+            }
+            set
+            {
+                if (_eliminated != value)
+                {
+                    if (value)
+                    {
+                        PlayerAvatar.Elminitate();
+                    }
+                    else
+                    {
+                        PlayerAvatar.ResetToDefault();
+                    }
+                    _eliminated = value;
+                }
+            }
+        }
+
+        public Seat(int playerIdx, PlayerType playerType, CardHolder tableau, PlayerAvatar playerAvatar)
+        {
+            PlayerIdx = playerIdx;
+            PlayerType = playerType;
+            Tableau = tableau;
+            PlayerAvatar = playerAvatar;
+            ResetToDefault();
+        }
+
+        public void ResetToDefault(bool completeReset = true)
+        {
+            if (completeReset)
+            {
+                WinProgress = 0;
+                Eliminated = false;
+            }
+            Cards = new List<Card>();
+        }
+
+        public float WinProgress
+        {
+            get
+            {
+                return PlayerAvatar.WinProgress;
+            }
+            set
+            {
+                PlayerAvatar.WinProgress = value;
+            }
+        }
+
+        public bool IsComputer
+        {
+            get
+            {
+                return PlayerType == PlayerType.Computer;
+            }
+        }
+
+        public IEnumerator AddCard(Card card, bool immediate)
+        {
+            Cards.Add(card);
+            HandValue += card.CardValue;
+            yield return card.SetParentCR(Tableau, immediate);
+        }
+
+        public void RemoveCard(Card card)
+        {
+            HandValue -= card.CardValue;
+            Cards.Remove(card);
+        }
+
+        public void OnMyTurnStarted()
+        {
+            PlayerAvatar.Torches.SetActive(true);
+            AvailableRuins += 1;
+        }
+
+        public void OnMyTurnEnded()
+        {
+            PlayerAvatar.Torches.SetActive(false);
+        }
+
+        public override string ToString()
+        {
+            return PlayerType + ": " + PlayerIdx;
+        }
+
+        public int CompareTo(Seat other)
+        {
+            return HandValue.CompareTo(other.HandValue);
+        }
+    }
+
+    void NextPlayer()
+    {
+        if (CurrentPlayerCards.Count == 0)
+        {
+            StartCoroutine(RoundOverCR());
+            SetInstruction(CurrentPlayer + " won this round!!!");
+        }
+        else
+        {
+            if (IsMyTurn)
+            {
+                OnMyTurnEnd();
+            }
+            CurrentPlayer.OnMyTurnEnded();
+            
+            NumActions = 0;
+            LastCardPlayed = null;
+
+            IncrPlayerIdx();
+            while (CurrentPlayer.Eliminated)
+            {
+                IncrPlayerIdx();
+            }
+
+            CurrentPlayer.OnMyTurnStarted();
+
+            StartCoroutine(NextPlayerCR());
+        }
+    }
+
+    void IncrPlayerIdx()
+    {
+        CurrentPlayerIdx += Direction;
+        if (CurrentPlayerIdx >= NumPlayers)
+        {
+            CurrentPlayerIdx = 0;
+        }
+        else if (CurrentPlayerIdx < 0)
+        {
+            CurrentPlayerIdx = NumPlayers - 1;
+        }
+    }
+
+    void SwitchDirection()
+    {
+        Direction *= -1;
+        // TODO: update direction indicator on UI
+    }
+
+    IEnumerator RoundOverCR()
+    {
+        int score = 0;
+        foreach (Seat seat in Seats)
+        {
+            if (seat == CurrentPlayer)
+            {
+                continue;
+            }
+
+            foreach (Card card in seat.Cards)
+            {
+                card.FaceDown = false;
+                yield return card.SetParentCR(CurrentPlayer.Tableau);
+                CurrentPlayer.Score += card.CardValue;
+                CurrentPlayer.WinProgress = CurrentPlayer.Score / (float)WinningScore;
+            }
+        }
+        
+
+        if (CurrentPlayer.WinProgress >= 1f)
+        {
+            // Eliminate weakest player
+            List<Seat> seatRanks = new List<Seat>(Seats);
+            seatRanks.Sort();
+            seatRanks.Reverse();
+            for (int i = 0; i < NumPlayers; i++)
+            {
+                Seat seat = seatRanks[i];
+                if (!seat.Eliminated)
+                {
+                    seat.Eliminated = true;
+                    yield return EliminatePlayer(seat);
+                    break;
+                }
+            }
+        }
+        Round += 1;
+
+        NextRound();
+    }
+
+    IEnumerator EliminatePlayer(Seat seat)
+    {
+        Time.timeScale = 0.3f;
+        ParticleSystem ps = Instantiate(EliminationPSPrefab, seat.PlayerAvatar.PortraitImage.transform, false);
+        ps.Play();
+        yield return new WaitForSeconds(0.3f);
+        Time.timeScale = 1f;
+    }
+
+    IEnumerator NextPlayerCR()
+    {
+        
+
+        bool canPlay = true;
+        if (IsOffensive(WasteCard))
+        {
+            if (!HasOffensiveOrDefensiveCards(CurrentPlayerCards))
+            {
+                switch (WasteCard.Rank)
+                {
+                    case Rank.Two:
+                    case Rank.Joker:
+                        //case USValue.Queen:
+                        yield return DrawAccumulatedCards();
+                        break;
+                }
+            }
+        }
+        else if (WasteCard.Rank == Rank.Kraken)
+        {
+            if (!HasOffensiveCards(CurrentPlayerCards))
+            {
+                yield return DrawCards(2);
+            }
+        }
+        else if (WasteCard.Rank == Rank.Alruana)
+        { 
+            if (!HasDefensiveCards(CurrentPlayerCards))
+            {
+                yield return DrawCards(1);
+
+                List<Card> offensiveCards = GetOffensiveCards(CurrentPlayerCards);
+                if (offensiveCards.Count > 0)
+                {
+                    Card offensiveCard = offensiveCards[0];
+                    CurrentPlayerCards.Remove(offensiveCard);
+                    yield return AddCardToGraveyardCR(offensiveCard);
+                }
+            }
+        }
+        else if (IsQueen(WasteCard) && AccumulatedCards > 0)
+        {
+            Card card = GetQueen(CurrentPlayerCards);
+            if (card != null)
+            {
+                yield return PlayCardCR(card);
+            }
+            else
+            {
+                yield return DrawAccumulatedCards();
+            }
+        }
+        else if (Is7(WasteCard) && SkipCounter > 0)
+        {
+            Card card = Get7(CurrentPlayerCards);
+            if (card != null)
+            {
+                Time.timeScale = 0.6f;
+                yield return PlayCardCR(card);
+                yield return new WaitForSeconds(0.2f);
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                canPlay = false;
+            }
+            SkipCounter = 0;
+        }
+
+        if (canPlay)
+        {
+            if (CurrentPlayer.IsComputer)
+            {
+                yield return new WaitForSeconds(Globals.WaitTime);
+
+                Card card = GetBestCardToPlay(CurrentPlayerCards);
+                bool gameOver = false;
+                if (card != null)
+                {
+                    Debug.Log(CurrentPlayer + " has card " + card + " to play");
+                    if (card.Rank == Rank.Eight)
+                    {
+                        Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
+                    }
+                    yield return PlayCardCR(card);
+                    yield return new WaitForSeconds(Globals.WaitTime);
+
+                    if (!IsEndsTurnCard(card))
+                    {
+                        card = GetBestCardToPlay(CurrentPlayerCards);
+                        while (card != null && !IsEndsTurnCard(card))
+                        {
+                            Debug.Log(CurrentPlayer + " has another card " + card + " to play");
+                            if (card.Rank == Rank.Eight)
+                            {
+                                Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
+                            }
+                            yield return PlayCardCR(card);
+                            card = GetBestCardToPlay(CurrentPlayerCards);
+                            yield return new WaitForSeconds(Globals.WaitTime);
+                        }
+                    }
+                }
+                else
+                {
+                    yield return DrawCard();
+                    card = LastDrawnCard;
+
+                    //Debug.Log(CurrentPlayer + " drew card " + card);
+                    if (card == null)
+                    {
+                        gameOver = true;
+                    }
+                    //yield return new WaitForSeconds(1.2f);
+                    if (CanPlay(card))
+                    {
+                        if (card.Rank == Rank.Eight)
+                        {
+                            Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
+                        }
+                        yield return PlayCardCR(card);
+                        //Debug.Log(CurrentPlayer + " played drawn card " + card);
+                        yield return new WaitForSeconds(Globals.WaitTime);
+                    }
+                }
+
+                //if (!gameOver)
+                //{
+                    NextPlayer();
+                //}
+            }
+            else if (CurrentPlayerIdx == MyPlayerIdx)
+            {
+                MyTurn();
+            }
+            /* TODO: pvp stuffs
+            else if (pvp)
+            {
+                instructionsText.text = "Wait for " + CurrentPlayerSeat.Player.DisplayName;
+                SendRealtimePokerHandMsg(new PokerHandMessage((int)PVP_CMDS.NEXT_PLAYER, currentPlayerIdx, null));
+            }
+            */
+        }
+        else
+        {
+            NextPlayer();
+        }
+        yield return null;
+    }
+
+    void SetInstruction(string text)
+    {
+        instructionsText.text = text;
+    }
+
+    void MyTurn()
+    {
+        OnMyTurn();
+        if (WasteCard.Rank == Rank.Eight)
+        {
+            SetInstruction("Play a " + Crazy8 + ", 8 or draw a card");
+        }
+        else if (WasteCard.Rank == Rank.Ace && WasteCard.Suit == Suit.Spade)
+        {
+            SetInstruction("Play any card");
+        }
+        else
+        {
+            SetInstruction("Play or draw a card");
+        }
+
+        if (!IsOffensive(WasteCard))
+        {
+            // stack.ShowHint();
+        }
+        else
+        {
+            SetInstruction("Play a defensive / offensive card");
+        }
+    }
+}
