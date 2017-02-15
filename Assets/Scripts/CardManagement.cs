@@ -109,11 +109,11 @@ public partial class Game : MonoBehaviour {
         {
             if (waste.Count > 1)
             {
-                cardsToReshuffle.Add(waste.Dequeue());
+                cardsToReshuffle.Add(waste.Pop());
             }
             if (waste.Count > 1)
             {
-                cardsToReshuffle.Add(waste.Dequeue());
+                cardsToReshuffle.Add(waste.Pop());
             }
             Shuffle(cardsToReshuffle);
             foreach (Card c in cardsToReshuffle)
@@ -155,6 +155,7 @@ public partial class Game : MonoBehaviour {
         {
             CardHolder parent = tableaus[CurrentPlayerIdx];
             Card card = graveyard.Pop();
+            card.FaceDown = CurrentPlayer != Me;
             ParticleSystem ps = Instantiate(ResurrectionPSPrefab, card.transform, false);
             ps.Play();
             yield return CurrentPlayer.AddCard(card, false);
@@ -163,11 +164,9 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator PlayCardCR(Card card)
     {
-        uiPlaySpecialBar.ShowBasedOnCard(card, Crazy8);
         LastCardPlayed = card;
         card.FaceDown = false;
         CurrentPlayer.RemoveCard(card);
-        
 
         switch (card.Rank)
         {
@@ -176,9 +175,19 @@ public partial class Game : MonoBehaviour {
                 break;
             case Rank.Two:
                 AccumulatedCards += 2;
+                if (CurrentPlayerHasPotion(PotionType.BasicSword))
+                {
+                    yield return AnimatePotion(PotionType.BasicSword);
+                    AccumulatedCards += 1;
+                }
                 break;
             case Rank.Joker:
                 AccumulatedCards += 5;
+                if (CurrentPlayerHasPotion(PotionType.BasicSword))
+                {
+                    yield return AnimatePotion(PotionType.BasicSword);
+                    AccumulatedCards += 1;
+                }
                 break;
             case Rank.Seven:
                 SkipCounter = SkipCounter == 1 ? 0 : 1;
@@ -192,6 +201,7 @@ public partial class Game : MonoBehaviour {
         {
             Crazy8 = card.Suit;
         }
+        uiPlaySpecialBar.ShowBasedOnCard(card, Crazy8);
 
         if (card.Rank == Rank.Queen && WasteCard.Rank == Rank.Queen)
         {
@@ -204,7 +214,10 @@ public partial class Game : MonoBehaviour {
             /*
             SpawnParticleSystem(wasteCard.transform, destroyKrakinPrefab);
             */
-            DestroyImmediate(WasteCard.gameObject);
+            if (WasteCard && WasteCard.gameObject)
+            {
+                DestroyImmediate(WasteCard.gameObject);
+            }
         }
 
         if (IsDefensive(card) && WasteCard.Rank == Rank.Alruana)
@@ -212,7 +225,10 @@ public partial class Game : MonoBehaviour {
             /*
             SpawnParticleSystem(wasteCard.transform, destroyKrakinPrefab);
             */
-            DestroyImmediate(WasteCard.gameObject);
+            if (WasteCard && WasteCard.gameObject)
+            {
+                DestroyImmediate(WasteCard.gameObject);
+            }
         }
 
         yield return EnqueueWasteCardCR(card);
@@ -249,8 +265,11 @@ public partial class Game : MonoBehaviour {
             // TODO: RoundOver();
         }
 
-        NumActions++;
-
+        if (!IsSpellCard(card))
+        {
+            NumActions++;
+        }
+        
         yield return null;
     }
 
@@ -268,7 +287,7 @@ public partial class Game : MonoBehaviour {
     {
         if (waste.Count > 2)
         {
-            Card wasteCard = waste.Dequeue();
+            Card wasteCard = waste.Pop();
             wasteCard.FaceDown = true;
             wasteCard.gameObject.SetActive(false);
             cardsToReshuffle.Add(wasteCard);
@@ -276,8 +295,7 @@ public partial class Game : MonoBehaviour {
 
         if (!IsSpellCard(card))
         {
-            waste.Enqueue(card);
-            
+            waste.Push(card);
         }
         yield return card.SetParentCR(wasteGo, immediate);
 

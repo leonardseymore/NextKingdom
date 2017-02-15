@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Game : MonoBehaviour {
@@ -43,7 +44,7 @@ public partial class Game : MonoBehaviour {
 
         if (wasteRank == Rank.Alruana)
         {
-            return IsDefensive(card);
+            return card.Rank == Rank.Ace;
         }
 
         if (cardRank == Rank.Joker || (wasteRank == Rank.Joker && IsOffensiveOrDefensive(card)))
@@ -190,23 +191,20 @@ public partial class Game : MonoBehaviour {
 
     bool HasOffensiveOrDefensiveCards(List<Card> cards)
     {
-        List<Card> specialCards = new List<Card>();
-        foreach (Card card in cards)
-        {
-            if (IsOffensiveOrDefensive(card))
-            {
-                return true;
-            }
-        }
-        return false;
+        return HasCards(cards, IsOffensiveOrDefensive);
     }
 
     bool HasOffensiveCards(List<Card> cards)
     {
+        return HasCards(cards, IsOffensive);
+    }
+
+    bool HasAce(List<Card> cards)
+    {
         List<Card> specialCards = new List<Card>();
         foreach (Card card in cards)
         {
-            if (IsOffensive(card))
+            if (card.Rank == Rank.Ace)
             {
                 return true;
             }
@@ -216,10 +214,30 @@ public partial class Game : MonoBehaviour {
 
     bool HasDefensiveCards(List<Card> cards)
     {
-        List<Card> specialCards = new List<Card>();
+        return HasCards(cards, IsDefensive);
+    }
+
+    List<Card> GetOffensiveOrDefensiveCards(List<Card> cards)
+    {
+        return MatchCards(cards, IsOffensiveOrDefensive);
+    }
+
+    List<Card> GetOffensiveCards(List<Card> cards)
+    {
+        return MatchCards(cards, IsOffensive);
+    }
+
+    List<Card> GetSpecialCards(List<Card> cards)
+    {
+        return MatchCards(cards, IsSpecial);
+    }
+
+    bool HasCards(List<Card> cards, Func<Card, bool> predicate)
+    {
+        List<Card> matchingCards = new List<Card>();
         foreach (Card card in cards)
         {
-            if (IsDefensive(card))
+            if (predicate.Invoke(card))
             {
                 return true;
             }
@@ -227,40 +245,16 @@ public partial class Game : MonoBehaviour {
         return false;
     }
 
-    List<Card> GetOffensiveOrDefensiveCards(List<Card> cards)
+    List<Card> MatchCards(List<Card> cards, Func<Card, bool> predicate)
     {
-        List<Card> specialCards = new List<Card>();
+        List<Card> matchingCards = new List<Card>();
         foreach (Card card in cards)
         {
-            if (IsOffensiveOrDefensive(card))
+            if (predicate.Invoke(card))
             {
-                specialCards.Add(card);
+                matchingCards.Add(card);
             }
         }
-        return specialCards;
-    }
-
-    List<Card> GetOffensiveCards(List<Card> cards)
-    {
-        List<Card> specialCards = new List<Card>();
-        foreach (Card card in cards)
-        {
-            if (IsOffensive(card))
-            {
-                specialCards.Add(card);
-            }
-        }
-        return specialCards;
-    }
-
-    List<Card> GetSpecialCards(List<Card> cards)
-    {
-        List<Card> specialCards = new List<Card>();
-        foreach (Card card in cards)
-        {
-            IsSpecial(card);
-            specialCards.Add(card);
-        }
-        return specialCards;
+        return matchingCards;
     }
 }

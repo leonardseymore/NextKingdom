@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using BitAura;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,11 +45,11 @@ public partial class Game : MonoBehaviour {
 
     void OnHighlightedCardChanged()
     {
+        uiButtonBarPickCrazy8.SetActive(HighlightedCard != null && HighlightedCard.Rank == Rank.Eight && WasteCard.Rank != Rank.Eight);
         if (HighlightedCard != null)
         {
             bool is8 = HighlightedCard.Rank == Rank.Eight;
-            uiButtonBarPickCrazy8.SetActive(is8);
-            if (is8)
+            if (is8 && WasteCard.Rank != Rank.Eight)
             {
                 SetInstruction("Pick a race");
                 Action = Action.PickCrazy8;
@@ -126,5 +129,15 @@ public partial class Game : MonoBehaviour {
     {
         Crazy8 = (Suit)crazy8;
         OnActionButtonClicked();
+    }
+
+    public void ApplyPotionAttack()
+    {
+        List<Card> cards = GetOffensiveCards(CurrentPlayerCards);
+    }
+
+    IEnumerator ApplyPotionCR()
+    {
+        yield return null;
     }
 }

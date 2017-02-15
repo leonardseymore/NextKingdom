@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitAura;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -19,9 +20,9 @@ public partial class Game : MonoBehaviour {
     public CardTextures CardTextures;
 
     List<Card> allCards = new List<Card>();
-    Stack<Card> deck = new Stack<Card>();
-    Queue<Card> waste = new Queue<Card>();
-    Stack<Card> graveyard = new Stack<Card>();
+    BitAura.Stack<Card> deck = new BitAura.Stack<Card>();
+    BitAura.Queue<Card> waste = new BitAura.Queue<Card>();
+    BitAura.Stack<Card> graveyard = new BitAura.Stack<Card>();
 
     Card WasteCard;
     Card LastCardPlayed;
@@ -42,21 +43,40 @@ public partial class Game : MonoBehaviour {
 
     public ParticleSystem ResurrectionPSPrefab;
     public ParticleSystem EliminationPSPrefab;
+    public ParticleSystem AccumulatedCardsLightingBolt;
 
-    public Texture2D CursorTex;
+    public Sprite DefaultCursorSprite;
+    Texture2D DefaultCursorTex;
+
+    Dictionary<SpellType, Spell> Spells = new Dictionary<SpellType, Spell>();
     #endregion
 
     #region Lifecycle
     void Awake()
     {
-        Cursor.SetCursor(CursorTex, Vector2.zero, CursorMode.ForceSoftware);
+        Spells.Add(SpellType.Krakin, new Spell(SpellType.Krakin, 10, true));
+        Spells.Add(SpellType.Alruana, new Spell(SpellType.Alruana, 8, true));
+        Spells.Add(SpellType.Dracula, new Spell(SpellType.Dracula, 3, false));
+
+        DefaultCursorTex = Utils.TextureFromSprite(DefaultCursorSprite);
+        SetDefaultCursor();
+    }
+
+    void SetDefaultCursor()
+    {
+        SetCursorTex(DefaultCursorTex, Vector2.zero);
+    }
+
+    void SetCursorTex(Texture2D tex, Vector2 hotspot)
+    {
+        Cursor.SetCursor(tex, hotspot, CursorMode.ForceSoftware);
     }
 
     void Start () {
         CreateCards();
         for (int i = 0; i < NumPlayers; i++)
         {
-            Seats.Add(new Seat(i, i == 0 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
+            Seats.Add(new Seat(i, i == -1 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
         }
         NextRound();
 	}

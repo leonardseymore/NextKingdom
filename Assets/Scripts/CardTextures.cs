@@ -17,9 +17,12 @@ public class CardTextures : MonoBehaviour {
 
     public Sprite[] RuinSprites;
 
+    public Sprite[] PotionSprites;
+
     public Dictionary<CardId, Sprite> SpriteLookup = new Dictionary<CardId, Sprite>();
     public Dictionary<Suit, Sprite> SuitSpriteLookup = new Dictionary<Suit, Sprite>();
     public Dictionary<Rank, Sprite> RankSpriteLookup = new Dictionary<Rank, Sprite>();
+    public Dictionary<PotionType, Sprite> PotionSpriteLookup = new Dictionary<PotionType, Sprite>();
 
     void Awake()
     {
@@ -30,6 +33,7 @@ public class CardTextures : MonoBehaviour {
         PopulateSpecialCardSprites();
         PopulateSuitTextureSprites();
         PopulateRankTextureSprites();
+        PopulatePotionTextureSprites();
     }
 
     // Standard Cards 0 = Rest, 1 = A, 2 = 2, 3 = 7, 4 = 8, 5 = J, 6 = Q, 7 = K
@@ -156,6 +160,14 @@ public class CardTextures : MonoBehaviour {
         for (int i = 0; i < 13; i++)
         {
             RankSpriteLookup[(Rank)(i + 1)] = RankTextures[i];
+        }
+    }
+
+    void PopulatePotionTextureSprites()
+    {
+        for (int i = 0; i < PotionSprites.Length; i++)
+        {
+            PotionSpriteLookup[(PotionType)(i)] = PotionSprites[i];
         }
     }
 }

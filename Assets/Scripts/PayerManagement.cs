@@ -61,6 +61,11 @@ public partial class Game : MonoBehaviour {
         }
     }
 
+    bool CurrentPlayerHasPotion(PotionType potion)
+    {
+        return CurrentPlayer.HasPotion(potion);
+    }
+
     class Seat : IComparable<Seat>
     {
         public int PlayerIdx;
@@ -70,6 +75,35 @@ public partial class Game : MonoBehaviour {
         public PlayerAvatar PlayerAvatar;
         public int HandValue;
         public int Score;
+
+        HashSet<PotionType> ActivePotions;
+
+        public void TogglePotion(PotionType potionType)
+        {
+            if (ActivePotions.Contains(potionType))
+            {
+                RemovePotion(potionType);
+            }
+            else
+            {
+                AddPotion(potionType);
+            }
+        }
+
+        public void AddPotion(PotionType potionType)
+        {
+            ActivePotions.Add(potionType);
+        }
+
+        public void RemovePotion(PotionType potionType)
+        {
+            ActivePotions.Remove(potionType);
+        }
+
+        public bool HasPotion(PotionType potionType)
+        {
+            return ActivePotions.Contains(potionType);
+        }
 
         public int AvailableRuins
         {
@@ -120,6 +154,14 @@ public partial class Game : MonoBehaviour {
         {
             if (completeReset)
             {
+                ActivePotions = new HashSet<PotionType>();
+
+                if (IsComputer)
+                {
+                    AddPotion(PotionType.BasicSword);
+                    AddPotion(PotionType.FrekenKraken);
+                }
+                
                 WinProgress = 0;
                 Eliminated = false;
             }
@@ -161,13 +203,13 @@ public partial class Game : MonoBehaviour {
 
         public void OnMyTurnStarted()
         {
-            PlayerAvatar.Torches.SetActive(true);
+            PlayerAvatar.Activate(true);
             AvailableRuins += 1;
         }
 
         public void OnMyTurnEnded()
         {
-            PlayerAvatar.Torches.SetActive(false);
+            PlayerAvatar.Activate(false);
         }
 
         public override string ToString()
@@ -304,21 +346,28 @@ public partial class Game : MonoBehaviour {
         {
             if (!HasOffensiveCards(CurrentPlayerCards))
             {
-                yield return DrawCards(2);
+                if (!CurrentPlayer.HasPotion(PotionType.FrekenKraken))
+                {
+                    yield return DrawCards(2);
+                }
+                else
+                {
+                    yield return AnimatePotion(PotionType.FrekenKraken);
+                }
             }
         }
         else if (WasteCard.Rank == Rank.Alruana)
         { 
-            if (!HasDefensiveCards(CurrentPlayerCards))
+            if (!HasAce(CurrentPlayerCards))
             {
                 yield return DrawCards(1);
 
                 List<Card> offensiveCards = GetOffensiveCards(CurrentPlayerCards);
                 if (offensiveCards.Count > 0)
                 {
-                    Card offensiveCard = offensiveCards[0];
-                    CurrentPlayerCards.Remove(offensiveCard);
-                    yield return AddCardToGraveyardCR(offensiveCard);
+                    yield return SpawnZombieCR(CurrentPlayer, offensiveCards[0]);
+                    DestroyImmediate(WasteCard.gameObject);
+                    WasteCard = waste.Tail();
                 }
             }
         }
@@ -357,56 +406,70 @@ public partial class Game : MonoBehaviour {
             {
                 yield return new WaitForSeconds(Globals.WaitTime);
 
-                Card card = GetBestCardToPlay(CurrentPlayerCards);
-                bool gameOver = false;
-                if (card != null)
+                bool endTurn = false;
+                if (!IsSpellCard(WasteCard))
                 {
-                    Debug.Log(CurrentPlayer + " has card " + card + " to play");
-                    if (card.Rank == Rank.Eight)
+                    if (UnityEngine.Random.Range(0, 10) < 2)
                     {
-                        Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
-                    }
-                    yield return PlayCardCR(card);
-                    yield return new WaitForSeconds(Globals.WaitTime);
-
-                    if (!IsEndsTurnCard(card))
-                    {
-                        card = GetBestCardToPlay(CurrentPlayerCards);
-                        while (card != null && !IsEndsTurnCard(card))
-                        {
-                            Debug.Log(CurrentPlayer + " has another card " + card + " to play");
-                            if (card.Rank == Rank.Eight)
-                            {
-                                Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
-                            }
-                            yield return PlayCardCR(card);
-                            card = GetBestCardToPlay(CurrentPlayerCards);
-                            yield return new WaitForSeconds(Globals.WaitTime);
-                        }
+                        yield return CastRandom();
+                        endTurn = LastCastSpell != null && LastCastSpell.EndsTurn;
                     }
                 }
-                else
-                {
-                    yield return DrawCard();
-                    card = LastDrawnCard;
 
-                    //Debug.Log(CurrentPlayer + " drew card " + card);
-                    if (card == null)
+                if (!endTurn)
+                {
+                    Card card = GetBestCardToPlay(CurrentPlayerCards);
+                    bool gameOver = false;
+                    if (card != null)
                     {
-                        gameOver = true;
-                    }
-                    //yield return new WaitForSeconds(1.2f);
-                    if (CanPlay(card))
-                    {
+                        Debug.Log(CurrentPlayer + " has card " + card + " to play");
                         if (card.Rank == Rank.Eight)
                         {
                             Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
                         }
                         yield return PlayCardCR(card);
-                        //Debug.Log(CurrentPlayer + " played drawn card " + card);
                         yield return new WaitForSeconds(Globals.WaitTime);
+
+                        if (!IsEndsTurnCard(card))
+                        {
+                            card = GetBestCardToPlay(CurrentPlayerCards);
+                            while (card != null && !IsEndsTurnCard(card))
+                            {
+                                Debug.Log(CurrentPlayer + " has another card " + card + " to play");
+                                if (card.Rank == Rank.Eight)
+                                {
+                                    Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
+                                }
+                                yield return PlayCardCR(card);
+                                card = GetBestCardToPlay(CurrentPlayerCards);
+                                yield return new WaitForSeconds(Globals.WaitTime);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        yield return DrawCard();
+                        card = LastDrawnCard;
+
+                        //Debug.Log(CurrentPlayer + " drew card " + card);
+                        if (card == null)
+                        {
+                            gameOver = true;
+                        }
+                        //yield return new WaitForSeconds(1.2f);
+                        if (CanPlay(card))
+                        {
+                            if (card.Rank == Rank.Eight)
+                            {
+                                Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
+                            }
+                            yield return PlayCardCR(card);
+                            //Debug.Log(CurrentPlayer + " played drawn card " + card);
+                            yield return new WaitForSeconds(Globals.WaitTime);
+                        }
                     }
                 }
+                
 
                 //if (!gameOver)
                 //{

@@ -27,9 +27,28 @@ public enum Action
     DrawCard, PlayCard, EndTurn, PickCrazy8
 }
 
-public enum Spell
+public enum SpellType
 {
-    Krakin = 0
+    Krakin = 0, Alruana, Dracula
+}
+
+public class Spell
+{
+    public SpellType SpellType;
+    public int Cost;
+    public bool EndsTurn;
+
+    public Spell(SpellType spellType, int cost, bool endsTurn)
+    {
+        SpellType = spellType;
+        Cost = cost;
+        EndsTurn = endsTurn;
+    }
+}
+
+public enum PotionType
+{
+    FrekenKraken = 0, BasicShield, BasicSword
 }
 
 public class CardId
