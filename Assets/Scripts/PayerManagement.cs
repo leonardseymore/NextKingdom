@@ -9,7 +9,31 @@ public partial class Game : MonoBehaviour {
     int CurrentPlayerIdx;
     int MyPlayerIdx;
     int NumPlayers = 4;
-    int WinningScore = 50;
+    int EliminatedPlayers = 0;
+    int WinningScore
+    {
+        get
+        {
+            switch (RemainingPlayers)
+            {
+                case 4:
+                    return 50;
+                case 3:
+                    return 30;
+                case 2:
+                    return 20;
+            }
+            return -1;
+        }
+    }
+
+    int RemainingPlayers
+    {
+        get
+        {
+            return NumPlayers - EliminatedPlayers;
+        }
+    }
 
     List<Seat> Seats = new List<Seat>();
 
@@ -75,6 +99,7 @@ public partial class Game : MonoBehaviour {
         public PlayerAvatar PlayerAvatar;
         public int HandValue;
         public int Score;
+        public int TotalScore;
 
         HashSet<PotionType> ActivePotions;
 
@@ -158,12 +183,19 @@ public partial class Game : MonoBehaviour {
 
                 if (IsComputer)
                 {
-                    AddPotion(PotionType.BasicSword);
-                    AddPotion(PotionType.FrekenKraken);
+                    //AddPotion(PotionType.BasicSword);
+                    //AddPotion(PotionType.FrekenKraken);
+                    AddPotion(PotionType.TemptressShield);
                 }
-                
-                WinProgress = 0;
+
+                TotalScore = 0;
                 Eliminated = false;
+            }
+
+            if (WinProgress >= 1f)
+            {
+                Score = 0;
+                WinProgress = 0;
             }
             Cards = new List<Card>();
         }
@@ -287,6 +319,7 @@ public partial class Game : MonoBehaviour {
                 card.FaceDown = false;
                 yield return card.SetParentCR(CurrentPlayer.Tableau);
                 CurrentPlayer.Score += card.CardValue;
+                CurrentPlayer.TotalScore += card.CardValue;
                 CurrentPlayer.WinProgress = CurrentPlayer.Score / (float)WinningScore;
             }
         }
@@ -305,12 +338,16 @@ public partial class Game : MonoBehaviour {
                 {
                     seat.Eliminated = true;
                     yield return EliminatePlayer(seat);
+                    EliminatedPlayers += 1;
+                    if (RemainingPlayers == 1)
+                    {
+                        EndGame();
+                    }
                     break;
                 }
             }
         }
         Round += 1;
-
         NextRound();
     }
 
@@ -419,7 +456,6 @@ public partial class Game : MonoBehaviour {
                 if (!endTurn)
                 {
                     Card card = GetBestCardToPlay(CurrentPlayerCards);
-                    bool gameOver = false;
                     if (card != null)
                     {
                         Debug.Log(CurrentPlayer + " has card " + card + " to play");
@@ -454,10 +490,9 @@ public partial class Game : MonoBehaviour {
                         //Debug.Log(CurrentPlayer + " drew card " + card);
                         if (card == null)
                         {
-                            gameOver = true;
+                            EndGame();
                         }
-                        //yield return new WaitForSeconds(1.2f);
-                        if (CanPlay(card))
+                        else if (CanPlay(card))
                         {
                             if (card.Rank == Rank.Eight)
                             {
@@ -469,12 +504,11 @@ public partial class Game : MonoBehaviour {
                         }
                     }
                 }
-                
 
-                //if (!gameOver)
-                //{
+                if (!GameOver)
+                {
                     NextPlayer();
-                //}
+                }
             }
             else if (CurrentPlayerIdx == MyPlayerIdx)
             {

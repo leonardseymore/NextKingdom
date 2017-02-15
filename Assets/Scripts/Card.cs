@@ -120,7 +120,27 @@ public class Card : MonoBehaviour {
         {
             if (Rank == Rank.Eight)
             {
+                return 40;
+            }
+            else if (Rank == Rank.Two)
+            {
+                return 25;
+            }
+            else if (Rank == Rank.Seven)
+            {
+                return 14;
+            }
+            else if (Rank == Rank.Joker)
+            {
                 return 50;
+            }
+            else if (Rank == Rank.Ace)
+            {
+                if (Suit == Suit.Spade)
+                {
+                    return 100;
+                }
+                return 11;
             }
             else if ((int)Rank >= 10)
             {

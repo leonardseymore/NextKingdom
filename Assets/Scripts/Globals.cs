@@ -48,7 +48,7 @@ public class Spell
 
 public enum PotionType
 {
-    FrekenKraken = 0, BasicShield, BasicSword
+    FrekenKraken = 0, BasicShield, BasicSword, TemptressShield
 }
 
 public class CardId

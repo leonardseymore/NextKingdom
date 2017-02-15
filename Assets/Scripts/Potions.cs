@@ -21,6 +21,9 @@ public partial class Game : MonoBehaviour {
             case PotionType.FrekenKraken:
                 yield return AnimateFrekenKrakenCR();
                 break;
+            case PotionType.TemptressShield:
+                yield return AnimateTemptressShieldCR();
+                break;
             case PotionType.BasicSword:
                 yield return AnimateBasicSwordCR();
                 break;
@@ -29,6 +32,14 @@ public partial class Game : MonoBehaviour {
     }
 
     IEnumerator AnimateFrekenKrakenCR()
+    {
+        PlayerAvatar avatar = CurrentPlayer.PlayerAvatar;
+        avatar.ShowDefensiveShieldRays = true;
+        yield return new WaitForSeconds(2);
+        avatar.ShowDefensiveShieldRays = false;
+    }
+
+    IEnumerator AnimateTemptressShieldCR()
     {
         PlayerAvatar avatar = CurrentPlayer.PlayerAvatar;
         avatar.ShowDefensiveShieldRays = true;

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 28c1f21612b114343bd5855c705ce2ff
-timeCreated: 1487149960
+timeCreated: 1487162756
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -111,6 +111,8 @@ TextureImporter:
     21300208: Carries
     21300210: Potion_BasicShield
     21300212: Potion_FrekenKraken
+    21300214: NKUI_0
+    21300216: Potion_TempressShield
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -1165,6 +1167,32 @@ TextureImporter:
         serializedVersion: 2
         x: 1550
         y: 1150
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NKUI_0
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 100
+        width: 160
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Potion_TempressShield
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 1000
         width: 150
         height: 150
       alignment: 0

@@ -15,6 +15,7 @@ public partial class Game : MonoBehaviour {
     public CardHolder graveyardGo;
     public CardHolder stackGo;
     public CardHolder wasteGo;
+    public CardHolder HiddenGo;
     public CardHolder[] tableaus;
 
     public CardTextures CardTextures;
@@ -78,7 +79,7 @@ public partial class Game : MonoBehaviour {
         {
             Seats.Add(new Seat(i, i == -1 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
         }
-        NextRound();
+        Restart();
 	}
 	
 	void Update () {

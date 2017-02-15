@@ -35,6 +35,12 @@ public partial class Game : MonoBehaviour {
         foreach (Card card in allCards)
         {
             card.gameObject.SetActive(true);
+            if (RemainingPlayers == 2 &&
+                card.Rank == Rank.Seven ||
+                card.Rank == Rank.Jack)
+            {
+                continue;
+            }
             deck.Push(card);
         }
 
@@ -45,7 +51,13 @@ public partial class Game : MonoBehaviour {
             {
                 continue;
             }
-            for (int i = 0; i < 8; i++)
+
+            int cardsPerPlayer = 8;
+            if (RemainingPlayers == 2)
+            {
+                cardsPerPlayer = 7;
+            }
+            for (int i = 0; i < cardsPerPlayer; i++)
             {
                 yield return seat.AddCard(PopCard(j > 0), true);
                 //yield return new WaitForSeconds(0.05f);
@@ -239,7 +251,16 @@ public partial class Game : MonoBehaviour {
                 if (AccumulatedCards > 0)
                 {
                     Time.timeScale = 0.8f;
-                    yield return DrawAccumulatedCards(2);
+                    if (CurrentPlayerHasPotion(PotionType.TemptressShield))
+                    {
+                        yield return AnimatePotion(PotionType.TemptressShield);
+                        AccumulatedCards -= Math.Min(2, AccumulatedCards);
+                    }
+                    else
+                    {
+                        yield return DrawAccumulatedCards(2);
+                    }
+                    
                     if (AccumulatedCards > 0)
                     {
                         SwitchDirection();
