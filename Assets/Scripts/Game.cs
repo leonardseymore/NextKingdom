@@ -50,6 +50,7 @@ public partial class Game : MonoBehaviour {
     Texture2D DefaultCursorTex;
 
     Dictionary<SpellType, Spell> Spells = new Dictionary<SpellType, Spell>();
+
     #endregion
 
     #region Lifecycle
@@ -74,10 +75,11 @@ public partial class Game : MonoBehaviour {
     }
 
     void Start () {
+        ToggleInfoWindow(true);
         CreateCards();
         for (int i = 0; i < NumPlayers; i++)
         {
-            Seats.Add(new Seat(i, i == -1 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
+            Seats.Add(new Seat(i, i == 0 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
         }
         Restart();
 	}

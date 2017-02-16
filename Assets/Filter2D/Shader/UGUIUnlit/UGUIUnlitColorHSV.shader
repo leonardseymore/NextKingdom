@@ -113,7 +113,7 @@
 	            colorHSV.y *= _Saturation;  //调整饱和度
 	            colorHSV.z *= _Value;                           
 
-	            color.rgb = HSVConvertToRGB(colorHSV.xyz);   //将调整后的HSV，转换为RGB颜色
+	            //color.rgb = HSVConvertToRGB(colorHSV.xyz);   //将调整后的HSV，转换为RGB颜色
 
 				color = (color+_TextureSampleAdd) * IN.color;
 				

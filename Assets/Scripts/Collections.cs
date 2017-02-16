@@ -95,6 +95,16 @@ namespace BitAura
             coll = new List<T>();
         }
 
+        public Stack(ICollection<T> coll)
+        {
+            this.coll = new List<T>(coll);
+        }
+
+        public bool Remove(T item)
+        {
+            return coll.Remove(item);
+        }
+
         public void Clear()
         {
             coll.Clear();

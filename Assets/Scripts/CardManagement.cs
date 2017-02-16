@@ -10,6 +10,18 @@ public partial class Game : MonoBehaviour {
     Card LastDrawnCard;
     List<Card> cardsToReshuffle;
 
+    int CardsPerPlayer
+    {
+        get
+        {
+            if (RemainingPlayers == 2)
+            {
+                return 7;
+            }
+            return 8;
+        }
+    }
+
     void Deal()
     {
         StartCoroutine(DealCR());
@@ -52,14 +64,10 @@ public partial class Game : MonoBehaviour {
                 continue;
             }
 
-            int cardsPerPlayer = 8;
-            if (RemainingPlayers == 2)
+            for (int i = 0; i < CardsPerPlayer; i++)
             {
-                cardsPerPlayer = 7;
-            }
-            for (int i = 0; i < cardsPerPlayer; i++)
-            {
-                yield return seat.AddCard(PopCard(j > 0), true);
+                Card card = PopCard(j != MyPlayerIdx);
+                yield return seat.AddCard(card, true);
                 //yield return new WaitForSeconds(0.05f);
             }
         }
@@ -96,15 +104,17 @@ public partial class Game : MonoBehaviour {
             list[n] = value;
         }
 
+        /*
         if (WasteCard == null)
         {
             // keep shuffling till we have valid deck
-            int index = NumPlayers * 8;
+            int index = NumPlayers * 8; // TODO: 2 player check, deal only 7
             if (IsSpecial(list[allCards.Count - index - 1]))
             {
                 Shuffle(list);
             }
         }
+        */
     }
 
     IEnumerator DrawCards(int numCards, bool flipUp = false)
@@ -302,6 +312,11 @@ public partial class Game : MonoBehaviour {
     bool IsSpellCard(Card card)
     {
         return (int)card.Rank < -1;
+    }
+
+    bool IsSpell(Rank rank)
+    {
+        return (int)rank < -1;
     }
 
     IEnumerator EnqueueWasteCardCR(Card card, bool immediate = false)

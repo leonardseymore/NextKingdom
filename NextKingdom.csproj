@@ -88,7 +88,6 @@
     <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_Blood.cs" />
     <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_Blur.cs" />
     <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_BurningFX.cs" />
-    <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_Cartoon.cs" />
     <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_CircleFade.cs" />
     <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_Clipping.cs" />
     <Compile Include="Assets\2DxFX\Scripts\2dxfx_AL\_2dxFX_AL_Color.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Blood.cs" />
     <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Blur.cs" />
     <Compile Include="Assets\2DxFX\Scripts\_2dxFX_BurningFX.cs" />
-    <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Cartoon.cs" />
     <Compile Include="Assets\2DxFX\Scripts\_2dxFX_CircleFade.cs" />
     <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Clipping.cs" />
     <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Color.cs" />
@@ -252,21 +250,23 @@
     <Compile Include="Assets\Scripts\CardHolder.cs" />
     <Compile Include="Assets\Scripts\CardManagement.cs" />
     <Compile Include="Assets\Scripts\CardTextures.cs" />
-    <Compile Include="Assets\Scripts\PotionButton.cs" />
-    <Compile Include="Assets\Scripts\Potions.cs" />
-    <Compile Include="Assets\Scripts\Utils.cs" />
     <Compile Include="Assets\Scripts\Collections.cs" />
     <Compile Include="Assets\Scripts\Dev.cs" />
+    <Compile Include="Assets\Scripts\HelpManagement.cs" />
     <Compile Include="Assets\Scripts\EventManagement.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\GameManagement.cs" />
     <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\Misc.cs" />
+    <Compile Include="Assets\Scripts\WindowManagement.cs" />
     <Compile Include="Assets\Scripts\PayerManagement.cs" />
     <Compile Include="Assets\Scripts\PlaySpecialBar.cs" />
     <Compile Include="Assets\Scripts\PlayerAvatar.cs" />
+    <Compile Include="Assets\Scripts\PotionButton.cs" />
+    <Compile Include="Assets\Scripts\Potions.cs" />
     <Compile Include="Assets\Scripts\Rules.cs" />
     <Compile Include="Assets\Scripts\Spells.cs" />
+    <Compile Include="Assets\Scripts\Utils.cs" />
     <Compile Include="Assets\Scripts\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>

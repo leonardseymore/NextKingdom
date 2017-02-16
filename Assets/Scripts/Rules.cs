@@ -141,14 +141,19 @@ public partial class Game : MonoBehaviour {
 
     bool IsSpecial(Card card)
     {
-        return card.Rank == Rank.Joker ||
-                card.Rank == Rank.Two ||
-                card.Rank == Rank.Seven ||
-                card.Rank == Rank.Jack ||
-                card.Rank == Rank.King ||
-                card.Rank == Rank.Eight ||
-                card.Rank == Rank.Queen ||
-                card.Rank == Rank.Ace;
+        return IsSpecial(card.Rank);
+    }
+
+    bool IsSpecial(Rank rank)
+    {
+        return rank == Rank.Joker ||
+                rank == Rank.Two ||
+                rank == Rank.Seven ||
+                rank == Rank.Jack ||
+                rank == Rank.King ||
+                rank == Rank.Eight ||
+                rank == Rank.Queen ||
+                rank == Rank.Ace;
     }
 
     Card GetBestCardToPlay(List<Card> cards)

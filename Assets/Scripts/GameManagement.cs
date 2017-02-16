@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine;
+﻿using UnityEngine;
 
 public partial class Game : MonoBehaviour {
     bool GameOver;
@@ -45,8 +41,9 @@ public partial class Game : MonoBehaviour {
         Deal();
     }
 
-    void Restart()
+    public void Restart()
     {
+        StopAllCoroutines();
         GameOver = false;
         Round = 0;
         Direction = 1;
@@ -56,6 +53,11 @@ public partial class Game : MonoBehaviour {
             seat.ResetToDefault();
         }
         NextRound();
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     void EndGame()
