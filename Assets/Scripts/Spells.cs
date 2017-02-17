@@ -11,24 +11,30 @@ public partial class Game : MonoBehaviour {
     IEnumerator CastCR(SpellType spellType, bool endTurn = false)
     {
         Spell spell = Spells[spellType];
-        CurrentPlayer.AvailableRuins -= spell.Cost;
+        if (CurrentPlayer.AvailableRuins < spell.Cost)
+        {
 
-        switch (spellType)
-        {
-            case SpellType.Krakin:
-                yield return CastKrakinCR();
-                break;
-            case SpellType.Alruana:
-                yield return CastAlruanaCR();
-                break;
-            case SpellType.Dracula:
-                yield return CastDraculaCR();
-                break;
         }
-        LastCastSpell = spell;
-        if (endTurn)
+        else
         {
-            NextPlayer();
+            CurrentPlayer.AvailableRuins -= spell.Cost;
+            switch (spellType)
+            {
+                case SpellType.Krakin:
+                    yield return CastKrakinCR();
+                    break;
+                case SpellType.Alruana:
+                    yield return CastAlruanaCR();
+                    break;
+                case SpellType.Dracula:
+                    yield return CastDraculaCR();
+                    break;
+            }
+            LastCastSpell = spell;
+            if (endTurn)
+            {
+                NextPlayer();
+            }
         }
     }
 

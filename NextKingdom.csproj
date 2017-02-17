@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -252,13 +250,12 @@
     <Compile Include="Assets\Scripts\CardTextures.cs" />
     <Compile Include="Assets\Scripts\Collections.cs" />
     <Compile Include="Assets\Scripts\Dev.cs" />
-    <Compile Include="Assets\Scripts\HelpManagement.cs" />
     <Compile Include="Assets\Scripts\EventManagement.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\GameManagement.cs" />
     <Compile Include="Assets\Scripts\Globals.cs" />
+    <Compile Include="Assets\Scripts\HelpManagement.cs" />
     <Compile Include="Assets\Scripts\Misc.cs" />
-    <Compile Include="Assets\Scripts\WindowManagement.cs" />
     <Compile Include="Assets\Scripts\PayerManagement.cs" />
     <Compile Include="Assets\Scripts\PlaySpecialBar.cs" />
     <Compile Include="Assets\Scripts\PlayerAvatar.cs" />
@@ -267,6 +264,7 @@
     <Compile Include="Assets\Scripts\Rules.cs" />
     <Compile Include="Assets\Scripts\Spells.cs" />
     <Compile Include="Assets\Scripts\Utils.cs" />
+    <Compile Include="Assets\Scripts\WindowManagement.cs" />
     <Compile Include="Assets\Scripts\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -342,7 +340,6 @@
     <None Include="Assets\2DxFX\Resources\_2dxFX_Blood.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_Blur.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_BurningFX.shader" />
-    <None Include="Assets\2DxFX\Resources\_2dxFX_Cartoon.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_CircleFade.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_Clipping.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_Color.shader" />

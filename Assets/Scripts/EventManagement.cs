@@ -22,7 +22,7 @@ public partial class Game : MonoBehaviour {
 
     void OnMyTurn()
     {
-        uiActionButton.interactable = true;
+        uiButtonPanel.SetActive(true);
         if (IsOffensive(WasteCard))
         {
             Action = Action.PlayCard;
@@ -35,12 +35,16 @@ public partial class Game : MonoBehaviour {
 
     void OnMyTurnEnd()
     {
-        CurrentState = GameState.WAIT_FOR_OPPONENT;
-        //uiButtonEndTurn.SetActive(false); TODO: flip action button
+        if (HighlightedCard != null)
+        {
+            HighlightedCard.Highlighted = false;
+            HighlightedCard = null;
+        }
         SetInstruction("Wait for opponent");
         uiButtonBarPickCrazy8.SetActive(false);
-        uiActionButton.interactable = false;
+        uiButtonPanel.SetActive(false);
         uiActionButtonText.text = "";
+        CurrentState = GameState.WAIT_FOR_OPPONENT;
     }
 
     void OnHighlightedCardChanged()
@@ -108,6 +112,7 @@ public partial class Game : MonoBehaviour {
 
     void UpdateActionButton()
     {
+        uiActionButton.interactable = true;
         switch (Action)
         {
             case Action.DrawCard:
@@ -120,7 +125,8 @@ public partial class Game : MonoBehaviour {
                 uiActionButtonText.text = "End Turn";
                 break;
             case Action.PickCrazy8:
-                // TODO:
+                uiActionButtonText.text = "";
+                uiActionButton.interactable = false;
                 break;
         }
     }

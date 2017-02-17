@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 317bf652998043a43903ad804f54799d
-timeCreated: 1486579106
+timeCreated: 1487313327
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -217,9 +217,9 @@ TextureImporter:
       name: Dracula
       rect:
         serializedVersion: 2
-        x: 2100
-        y: 2000
-        width: 297
+        x: 2104
+        y: 1999
+        width: 293
         height: 420
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

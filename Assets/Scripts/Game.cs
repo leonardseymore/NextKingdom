@@ -31,6 +31,7 @@ public partial class Game : MonoBehaviour {
 
     GameState CurrentState;
 
+    public GameObject uiButtonPanel;
     public Button uiActionButton;
     public Text uiActionButtonText;
     public PlaySpecialBar uiPlaySpecialBar;
@@ -50,7 +51,7 @@ public partial class Game : MonoBehaviour {
     Texture2D DefaultCursorTex;
 
     Dictionary<SpellType, Spell> Spells = new Dictionary<SpellType, Spell>();
-
+    public AudioSource AudioSourceCard;
     #endregion
 
     #region Lifecycle

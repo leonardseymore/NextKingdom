@@ -50,11 +50,11 @@ public partial class Game : MonoBehaviour {
     IEnumerator AnimateBasicSwordCR()
     {
         PlayerAvatar avatar = CurrentPlayer.PlayerAvatar;
+        AudioSource audio = AccumulatedCardsLightingBolt.GetComponent<AudioSource>();
         AccumulatedCardsLightingBolt.Play();
+        audio.Play();
         yield return new WaitForSeconds(1f);
         AccumulatedCardsLightingBolt.Play();
-        yield return new WaitForSeconds(1f);
-        AccumulatedCardsLightingBolt.Play();
-        yield return new WaitForSeconds(1f);
+        audio.Play();
     }
 }

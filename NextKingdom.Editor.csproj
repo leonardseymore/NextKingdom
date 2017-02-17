@@ -211,7 +211,6 @@
     <None Include="Assets\2DxFX\Resources\_2dxFX_Blood.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_Blur.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_BurningFX.shader" />
-    <None Include="Assets\2DxFX\Resources\_2dxFX_Cartoon.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_CircleFade.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_Clipping.shader" />
     <None Include="Assets\2DxFX\Resources\_2dxFX_Color.shader" />

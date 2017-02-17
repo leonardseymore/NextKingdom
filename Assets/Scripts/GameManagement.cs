@@ -52,6 +52,11 @@ public partial class Game : MonoBehaviour {
         {
             seat.ResetToDefault();
         }
+        if (HighlightedCard != null)
+        {
+            HighlightedCard.Highlighted = false;
+            HighlightedCard = null;
+        }
         NextRound();
     }
 

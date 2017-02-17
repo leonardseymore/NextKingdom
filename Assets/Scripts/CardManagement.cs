@@ -73,6 +73,10 @@ public partial class Game : MonoBehaviour {
         }
 
         yield return EnqueueWasteCardCR(PopCard(false), true);
+        while (IsSpecial(WasteCard))
+        {
+            yield return EnqueueWasteCardCR(PopCard(false), true);
+        }
 
         if (IsMyTurn)
         {
@@ -103,18 +107,6 @@ public partial class Game : MonoBehaviour {
             list[k] = list[n];
             list[n] = value;
         }
-
-        /*
-        if (WasteCard == null)
-        {
-            // keep shuffling till we have valid deck
-            int index = NumPlayers * 8; // TODO: 2 player check, deal only 7
-            if (IsSpecial(list[allCards.Count - index - 1]))
-            {
-                Shuffle(list);
-            }
-        }
-        */
     }
 
     IEnumerator DrawCards(int numCards, bool flipUp = false)
@@ -151,6 +143,7 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator DrawCard()
     {
+        AudioSourceCard.Play();
         CardHolder parent = tableaus[CurrentPlayerIdx];
         LastDrawnCard = PopCard(parent.name != "Bottom");
         yield return CurrentPlayer.AddCard(LastDrawnCard, false);
@@ -186,6 +179,8 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator PlayCardCR(Card card)
     {
+        AudioSourceCard.Play();
+
         LastCardPlayed = card;
         card.FaceDown = false;
         CurrentPlayer.RemoveCard(card);
