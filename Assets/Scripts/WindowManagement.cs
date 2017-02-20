@@ -5,6 +5,8 @@ public partial class Game : MonoBehaviour {
     public GameObject SpellWindow;
     public GameObject PotionWindow;
     public GameObject InfoWindow;
+    public GameObject WinWindow;
+    public GameObject LooseWindow;
 
     public void ToggleSpellWindow(bool visible)
     {
@@ -22,5 +24,17 @@ public partial class Game : MonoBehaviour {
     {
         Camera.main.GetComponent<BlurOptimized>().enabled = visible;
         InfoWindow.SetActive(visible);
+    }
+
+    public void ToggleWinWindow(bool visible)
+    {
+        Camera.main.GetComponent<BlurOptimized>().enabled = visible;
+        WinWindow.SetActive(visible);
+    }
+
+    public void ToggleLooseWindow(bool visible)
+    {
+        Camera.main.GetComponent<BlurOptimized>().enabled = visible;
+        LooseWindow.SetActive(visible);
     }
 }

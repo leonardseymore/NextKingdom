@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public enum Suit
 {
@@ -8,7 +9,7 @@ public enum Suit
 
 public enum Rank
 {
-    Joker = -1, Kraken = -2, Alruana = -3, Dracula = -4,
+    Joker = -1, Kraken = -2, Alruana = -3, Dracula = -4, Tornado = -5,
     Ace = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
 }
 
@@ -29,7 +30,7 @@ public enum Action
 
 public enum SpellType
 {
-    Krakin = 0, Alruana, Dracula
+    Krakin = 0, Alruana, Dracula, Tornado
 }
 
 public class Spell

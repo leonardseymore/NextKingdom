@@ -36,6 +36,7 @@ public partial class Game : MonoBehaviour {
     public Text uiActionButtonText;
     public PlaySpecialBar uiPlaySpecialBar;
     public Text instructionsText;
+    public Text finalScoreText;
 
     public GameObject uiButtonBarPickCrazy8;
     public GameObject uiAccumulatedCardsGo;
@@ -60,6 +61,7 @@ public partial class Game : MonoBehaviour {
         Spells.Add(SpellType.Krakin, new Spell(SpellType.Krakin, 10, true));
         Spells.Add(SpellType.Alruana, new Spell(SpellType.Alruana, 8, true));
         Spells.Add(SpellType.Dracula, new Spell(SpellType.Dracula, 3, false));
+        Spells.Add(SpellType.Tornado, new Spell(SpellType.Tornado, 100, false));
 
         DefaultCursorTex = Utils.TextureFromSprite(DefaultCursorSprite);
         SetDefaultCursor();
@@ -80,7 +82,7 @@ public partial class Game : MonoBehaviour {
         CreateCards();
         for (int i = 0; i < NumPlayers; i++)
         {
-            Seats.Add(new Seat(i, i == 0 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
+            Seats.Add(new Seat(i, i == -1 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
         }
         Restart();
 	}

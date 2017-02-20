@@ -1,8 +1,12 @@
 ﻿using BitAura;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Game : MonoBehaviour {
+
+    static List<PotionType> OffensivePotions = new List<PotionType>(new PotionType[] { PotionType.BasicSword });
+    static List<PotionType> DefensivePotions = new List<PotionType>(new PotionType[] { PotionType.BasicShield, PotionType.FrekenKraken, PotionType.TemptressShield });
 
     public void TogglePotion(string potionTypeStr)
     {

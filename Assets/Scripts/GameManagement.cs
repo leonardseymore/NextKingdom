@@ -15,16 +15,7 @@ public partial class Game : MonoBehaviour {
         foreach (Card card in allCards)
         {
             card.Reset();
-            if (RemainingPlayers == 2 &&
-                card.Rank == Rank.Seven ||
-                card.Rank == Rank.Jack)
-            {
-                card.SetParent(HiddenGo);
-            }
-            else
-            {
-                card.SetParent(stackGo);
-            }
+            card.SetParent(stackGo);
         }
         
         //uiResultsPanel.SetActive(false);
@@ -68,5 +59,15 @@ public partial class Game : MonoBehaviour {
     void EndGame()
     {
         GameOver = true;
+
+        if (Me.Eliminated)
+        {
+            ToggleLooseWindow(true);
+        }
+        else
+        {
+            finalScoreText.text = ((int)Mathf.Pow(Me.TotalScore, 2.1f)).ToString();
+            ToggleWinWindow(true);
+        }
     }
 }

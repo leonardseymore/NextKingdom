@@ -47,12 +47,6 @@ public partial class Game : MonoBehaviour {
         foreach (Card card in allCards)
         {
             card.gameObject.SetActive(true);
-            if (RemainingPlayers == 2 &&
-                card.Rank == Rank.Seven ||
-                card.Rank == Rank.Jack)
-            {
-                continue;
-            }
             deck.Push(card);
         }
 

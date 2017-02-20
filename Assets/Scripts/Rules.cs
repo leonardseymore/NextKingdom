@@ -62,6 +62,30 @@ public partial class Game : MonoBehaviour {
             return true;
         }
 
+        if (RemainingPlayers == 2)
+        {
+            if (LastCardPlayed != null)
+            {
+                Rank lastCardPlayedRank = LastCardPlayed.Rank;
+                Suit lastCardPlayedSuit = LastCardPlayed.Suit;
+
+                bool isCarry = cardRank == Rank.King || cardRank == Rank.Seven || cardRank == Rank.Jack;
+                bool lastIsCarry = lastCardPlayedRank == Rank.King || lastCardPlayedRank == Rank.Seven || lastCardPlayedRank == Rank.Jack;
+
+                if (isCarry && wasteSuit == cardSuit)
+                {
+                    return true;
+                }
+
+                if (lastIsCarry)
+                {
+                    return cardRank == lastCardPlayedRank || cardSuit == lastCardPlayedSuit;
+                }
+
+                return cardRank == lastCardPlayedRank;
+            }
+        }
+
         if (LastCardPlayed != null && LastCardPlayed.Rank != Rank.Seven)
         {
             Rank lastCardPlayedRank = LastCardPlayed.Rank;
@@ -133,8 +157,8 @@ public partial class Game : MonoBehaviour {
         return (card.Rank == Rank.Ace && card.Suit == Suit.Spade) ||
                 card.Rank == Rank.Joker ||
                 card.Rank == Rank.Two ||
-                card.Rank == Rank.Seven ||
-                card.Rank == Rank.Jack ||
+                (RemainingPlayers > 2 && card.Rank == Rank.Seven) ||
+                (RemainingPlayers > 2 && card.Rank == Rank.Jack) ||
                 card.Rank == Rank.Queen ||
                 card.Rank == Rank.Eight;
     }

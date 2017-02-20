@@ -180,16 +180,9 @@ public partial class Game : MonoBehaviour {
             if (completeReset)
             {
                 ActivePotions = new HashSet<PotionType>();
-
-                if (IsComputer)
-                {
-                    //AddPotion(PotionType.BasicSword);
-                    //AddPotion(PotionType.FrekenKraken);
-                    AddPotion(PotionType.TemptressShield);
-                }
-
                 TotalScore = 0;
                 Eliminated = false;
+                AvailableRuins = 0;
             }
 
             if (WinProgress >= 1f)
@@ -233,8 +226,28 @@ public partial class Game : MonoBehaviour {
             Cards.Remove(card);
         }
 
+        void ActivateRandomPotions()
+        {
+            ActivePotions = new HashSet<PotionType>();
+            if (UnityEngine.Random.Range(0, 10) < 5)
+            {
+                ActivePotions.Add(PotionType.BasicSword);
+            }
+
+            
+            if (UnityEngine.Random.Range(0, 10) < 5)
+            {
+                ActivePotions.Add(DefensivePotions[UnityEngine.Random.Range(0, DefensivePotions.Count)]);
+            }
+        }
+
         public void OnMyTurnStarted()
         {
+            if (IsComputer)
+            {
+                ActivateRandomPotions();
+            }
+
             PlayerAvatar.Activate(true);
             AvailableRuins += 1;
         }
@@ -339,16 +352,20 @@ public partial class Game : MonoBehaviour {
                     seat.Eliminated = true;
                     yield return EliminatePlayer(seat);
                     EliminatedPlayers += 1;
-                    if (RemainingPlayers == 1)
-                    {
-                        EndGame();
-                    }
                     break;
                 }
             }
         }
-        Round += 1;
-        NextRound();
+
+        if (RemainingPlayers == 1 || Me.Eliminated)
+        {
+            EndGame();
+        }
+        else
+        {
+            Round += 1;
+            NextRound();
+        }
     }
 
     IEnumerator EliminatePlayer(Seat seat)
@@ -534,12 +551,29 @@ public partial class Game : MonoBehaviour {
         instructionsText.text = text;
     }
 
+    string SuitColor(Suit suit)
+    {
+        switch (suit)
+        {
+            case Suit.Club:
+                return "Purple";
+            case Suit.Diamond:
+                return "Green";
+            case Suit.Heart:
+                return "Blue";
+            case Suit.Spade:
+                return "Red";
+        }
+        return null;
+    }
+
+
     void MyTurn()
     {
         OnMyTurn();
         if (WasteCard.Rank == Rank.Eight)
         {
-            SetInstruction("Play a " + Crazy8 + ", 8 or draw a card");
+            SetInstruction("Play <color=" + SuitColor(Crazy8) + ">" + SuitColor(Crazy8) + "</color>, a <b>Totem</b> or draw a card");
         }
         else if (WasteCard.Rank == Rank.Ace && WasteCard.Suit == Suit.Spade)
         {

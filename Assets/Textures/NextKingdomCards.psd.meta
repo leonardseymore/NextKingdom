@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 317bf652998043a43903ad804f54799d
-timeCreated: 1487313327
+timeCreated: 1487526742
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -49,6 +49,8 @@ TextureImporter:
     21300084: Diamonds_A
     21300086: NextKingdomCards_43
     21300088: Dracula_Detail
+    21300090: Tornado
+    21300092: Tornado_Detail
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -702,6 +704,32 @@ TextureImporter:
         y: 2000
         width: 300
         height: 418
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Tornado
+      rect:
+        serializedVersion: 2
+        x: 2705
+        y: 2046
+        width: 290
+        height: 329
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Tornado_Detail
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 2000
+        width: 300
+        height: 420
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

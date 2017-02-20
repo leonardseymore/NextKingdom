@@ -8,6 +8,17 @@ public partial class Game : MonoBehaviour {
     public ParticleSystem PSBatsPrefab;
     public ParticleSystem PSSpellSpawnPrefab;
 
+    Card SpawnSpellCard(Rank rank)
+    {
+        ParticleSystem castPs = Instantiate(PSSpellSpawnPrefab, CurrentPlayer.PlayerAvatar.SpellSpawnArea.transform, false);
+        castPs.Play();
+
+        Card card = InstantiateCard(Suit.Special, rank);
+        card.FaceDown = false;
+        card.SetParent(CurrentPlayer.PlayerAvatar.SpellSpawnArea);
+        return card;
+    }
+
     IEnumerator CastCR(SpellType spellType, bool endTurn = false)
     {
         Spell spell = Spells[spellType];
@@ -28,6 +39,9 @@ public partial class Game : MonoBehaviour {
                     break;
                 case SpellType.Dracula:
                     yield return CastDraculaCR();
+                    break;
+                case SpellType.Tornado:
+                    yield return CastTornadoCR();
                     break;
             }
             LastCastSpell = spell;
@@ -123,14 +137,18 @@ public partial class Game : MonoBehaviour {
         DestroyImmediate(card.gameObject);
     }
 
-    Card SpawnSpellCard(Rank rank)
-    {
-        ParticleSystem castPs = Instantiate(PSSpellSpawnPrefab, CurrentPlayer.PlayerAvatar.SpellSpawnArea.transform, false);
-        castPs.Play();
 
-        Card card = InstantiateCard(Suit.Special, rank);
-        card.FaceDown = false;
-        card.SetParent(CurrentPlayer.PlayerAvatar.SpellSpawnArea);
-        return card;
+    public void CastTornado()
+    {
+        StartCoroutine(CastCR(SpellType.Tornado));
+    }
+
+    IEnumerator CastTornadoCR()
+    {
+        Card card = SpawnSpellCard(Rank.Tornado);
+        yield return new WaitForSeconds(1f);
+        yield return PlayCardCR(card);
+        yield return SpawnTornadoCR(Me);
+        DestroyImmediate(card.gameObject);
     }
 }
