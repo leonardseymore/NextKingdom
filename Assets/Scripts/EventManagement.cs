@@ -104,6 +104,15 @@ public partial class Game : MonoBehaviour {
         }
         else
         {
+            if (IsCarry(HighlightedCard))
+            {
+                SetInstruction("Play <color=" + SuitColor(HighlightedCard.Suit) + ">" + SuitColor(HighlightedCard.Suit) + "</color>, Carry or end turn");
+            }
+            else
+            {
+                SetInstruction("Play <b>" + RankDesc(HighlightedCard.Rank) + "</b>, <color=" + SuitColor(HighlightedCard.Suit) + ">Carry</color> or end turn");
+            }
+            
             Action = Action.EndTurn;
         }
         HighlightedCard = null;

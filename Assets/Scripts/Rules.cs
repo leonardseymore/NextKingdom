@@ -142,6 +142,11 @@ public partial class Game : MonoBehaviour {
         return IsOffensive(card) || IsDefensive(card);
     }
 
+    bool IsCarry(Card card)
+    {
+        return card.Rank == Rank.King || (RemainingPlayers == 2 && (card.Rank == Rank.Seven || card.Rank == Rank.Jack));
+    }
+
     bool IsOffensive(Card card)
     {
         return card.Rank == Rank.Two || card.Rank == Rank.Joker;

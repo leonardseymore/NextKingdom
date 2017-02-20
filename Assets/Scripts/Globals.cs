@@ -30,7 +30,7 @@ public enum Action
 
 public enum SpellType
 {
-    Krakin = 0, Alruana, Dracula, Tornado
+    Krakin = 0, Alruana, Dracula
 }
 
 public class Spell

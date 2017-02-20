@@ -267,7 +267,6 @@
     <Compile Include="Assets\Scripts\Spells.cs" />
     <Compile Include="Assets\Scripts\Utils.cs" />
     <Compile Include="Assets\Scripts\WindowManagement.cs" />
-    <Compile Include="Assets\Scripts\Tornado.cs" />
     <Compile Include="Assets\Scripts\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>

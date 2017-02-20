@@ -39,19 +39,4 @@ public partial class Game : MonoBehaviour {
         player.Cards.Remove(cardToSteal);
         AddCardToGraveyard(cardToSteal);
     }
-
-    public Tornado TornadoPrefab;
-
-    IEnumerator SpawnTornadoCR(Seat player)
-    {
-        Tornado tornado = Instantiate(TornadoPrefab);
-        tornado.transform.position = stackGo.transform.position;
-        tornado.Initialize(player.Tableau, PopCard(player != Me));
-        yield return new WaitForTornado(tornado);
-        /*
-        cardToSteal.Visible = true;
-        player.Cards.Remove(cardToSteal);
-        AddCardToGraveyard(cardToSteal);
-        */
-    }
 }

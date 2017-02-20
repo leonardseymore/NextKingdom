@@ -567,6 +567,42 @@ public partial class Game : MonoBehaviour {
         return null;
     }
 
+    string RankDesc(Rank rank)
+    {
+        switch (rank)
+        {
+            case Rank.Ace:
+                return "Shield";
+            case Rank.Two:
+                return "Sword";
+            case Rank.Three:
+                return "Three";
+            case Rank.Four:
+                return "Four";
+            case Rank.Five:
+                return "Five";
+            case Rank.Six:
+                return "Six";
+            case Rank.Seven:
+                return "Bribe";
+            case Rank.Eight:
+                return "Totem";
+            case Rank.Nine:
+                return "Nine";
+            case Rank.Ten:
+                return "Ten";
+            case Rank.Jack:
+                return "Rally";
+            case Rank.Queen:
+                return "Temptress";
+            case Rank.King:
+                return "Carry";
+            case Rank.Joker:
+                return "Wild";
+        }
+        return null;
+    }
+
 
     void MyTurn()
     {
@@ -579,18 +615,44 @@ public partial class Game : MonoBehaviour {
         {
             SetInstruction("Play any card");
         }
+        else if (WasteCard.Rank == Rank.Eight)
+        {
+            SetInstruction("Play Temptress");
+        }
+        else if (!IsOffensive(WasteCard) && !IsSpellCard(WasteCard))
+        {
+            SetInstruction("Play <color=" + SuitColor(WasteCard.Suit) + ">" + SuitColor(WasteCard.Suit) + "</color>, a <b>" + RankDesc(WasteCard.Rank) + "</b> or draw a card");
+        }
+        else if (IsSpellCard(WasteCard))
+        {
+            switch (WasteCard.Rank)
+            {
+                case Rank.Kraken:
+                    SetInstruction("Play <b>Offensive</b> card");
+                    break;
+                case Rank.Alruana:
+                    SetInstruction("Play <b>Shield</b>");
+                    break;
+            }
+        }
+        else if (IsOffensive(WasteCard) && AccumulatedCards == 0)
+        {
+            if (WasteCard.Rank == Rank.Joker)
+            {
+                SetInstruction("Play any card");
+            }
+            else
+            {
+                SetInstruction("Play <color=" + SuitColor(WasteCard.Suit) + ">" + SuitColor(WasteCard.Suit) + "</color>, a <b>" + RankDesc(WasteCard.Rank) + "</b> or draw a card");
+            }
+        }
+        else if (IsOffensive(WasteCard) && AccumulatedCards > 0)
+        {
+            SetInstruction("Play a defensive / offensive card");
+        }
         else
         {
             SetInstruction("Play or draw a card");
-        }
-
-        if (!IsOffensive(WasteCard))
-        {
-            // stack.ShowHint();
-        }
-        else
-        {
-            SetInstruction("Play a defensive / offensive card");
         }
     }
 }

@@ -40,9 +40,6 @@ public partial class Game : MonoBehaviour {
                 case SpellType.Dracula:
                     yield return CastDraculaCR();
                     break;
-                case SpellType.Tornado:
-                    yield return CastTornadoCR();
-                    break;
             }
             LastCastSpell = spell;
             if (endTurn)
@@ -134,21 +131,6 @@ public partial class Game : MonoBehaviour {
             yield return SpawnZombieCR();
         }
         
-        DestroyImmediate(card.gameObject);
-    }
-
-
-    public void CastTornado()
-    {
-        StartCoroutine(CastCR(SpellType.Tornado));
-    }
-
-    IEnumerator CastTornadoCR()
-    {
-        Card card = SpawnSpellCard(Rank.Tornado);
-        yield return new WaitForSeconds(1f);
-        yield return PlayCardCR(card);
-        yield return SpawnTornadoCR(Me);
         DestroyImmediate(card.gameObject);
     }
 }
