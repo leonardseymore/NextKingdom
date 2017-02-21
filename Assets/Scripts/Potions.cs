@@ -12,6 +12,7 @@ public partial class Game : MonoBehaviour {
     {
         PotionType potion = Utils.ParseEnum<PotionType>(potionTypeStr);
         CurrentPlayer.TogglePotion(potion);
+        UnlockAchievement(ACHIEVEMENT_SWITCH_POTIONS);
     }
 
     IEnumerator AnimatePotion(PotionType potionType)
@@ -57,7 +58,7 @@ public partial class Game : MonoBehaviour {
         AudioSource audio = AccumulatedCardsLightingBolt.GetComponent<AudioSource>();
         AccumulatedCardsLightingBolt.Play();
         audio.Play();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         AccumulatedCardsLightingBolt.Play();
         audio.Play();
     }

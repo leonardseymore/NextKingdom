@@ -96,6 +96,8 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator PlaySelectedCard()
     {
+        uiActionButton.interactable = false;
+
         HighlightedCard.Highlighted = false;
         yield return PlayCardCR(HighlightedCard);
         if (IsEndsTurnCard(HighlightedCard))
@@ -116,7 +118,7 @@ public partial class Game : MonoBehaviour {
             Action = Action.EndTurn;
         }
         HighlightedCard = null;
-        
+        uiActionButton.interactable = true;
     }
 
     void UpdateActionButton()

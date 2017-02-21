@@ -92,6 +92,11 @@ public partial class Game : MonoBehaviour {
         {
             yield return AnimatePotion(PotionType.FrekenKraken);
         }
+
+        if (IsMyTurn)
+        {
+            UnlockAchievement(ACHIEVEMENT_CAST_KRAKEN);
+        }
     }
 
     public void CastAlruana()
@@ -132,5 +137,10 @@ public partial class Game : MonoBehaviour {
         }
         
         DestroyImmediate(card.gameObject);
+
+        if (IsMyTurn)
+        {
+            UnlockAchievement(ACHIEVEMENT_CAST_DRACULA);
+        }
     }
 }

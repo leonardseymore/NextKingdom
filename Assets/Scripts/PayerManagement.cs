@@ -379,7 +379,7 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator NextPlayerCR()
     {
-        
+        yield return ShootCannon(CurrentPlayer, wasteGo.transform);
 
         bool canPlay = true;
         if (IsOffensive(WasteCard))

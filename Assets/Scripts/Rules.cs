@@ -72,7 +72,7 @@ public partial class Game : MonoBehaviour {
                 bool isCarry = cardRank == Rank.King || cardRank == Rank.Seven || cardRank == Rank.Jack;
                 bool lastIsCarry = lastCardPlayedRank == Rank.King || lastCardPlayedRank == Rank.Seven || lastCardPlayedRank == Rank.Jack;
 
-                if (isCarry && wasteSuit == cardSuit)
+                if (isCarry && (lastIsCarry || wasteSuit == cardSuit))
                 {
                     return true;
                 }

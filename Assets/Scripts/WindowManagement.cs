@@ -2,6 +2,8 @@
 using UnityStandardAssets.ImageEffects;
 
 public partial class Game : MonoBehaviour {
+    public RectTransform[] Layouts;
+
     public GameObject SpellWindow;
     public GameObject PotionWindow;
     public GameObject InfoWindow;

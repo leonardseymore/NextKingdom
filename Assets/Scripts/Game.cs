@@ -77,6 +77,7 @@ public partial class Game : MonoBehaviour {
     }
 
     void Start () {
+        StartSocial();
         ToggleInfoWindow(true);
         CreateCards();
         for (int i = 0; i < NumPlayers; i++)
@@ -84,7 +85,8 @@ public partial class Game : MonoBehaviour {
             Seats.Add(new Seat(i, i == 0 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
         }
         Restart();
-	}
+        StartAds();
+    }
 	
 	void Update () {
         if (!IsMyTurn)

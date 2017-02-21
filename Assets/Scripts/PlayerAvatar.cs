@@ -17,6 +17,8 @@ public class PlayerAvatar : MonoBehaviour {
     public Image PotionImage;
     public GameObject DefensiveShieldRays;
 
+    public GameObject[] Cannons;
+
     private void Awake()
     {
         ResetToDefault();
@@ -112,6 +114,18 @@ public class PlayerAvatar : MonoBehaviour {
         set
         {
             PotionImage.gameObject.SetActive(value);
+        }
+    }
+
+    public GameObject GetRandomCannon
+    {
+        get
+        {
+            if (Cannons.Length > 0)
+            {
+                return Cannons[Random.Range(0, Cannons.Length)];
+            }
+            return null;
         }
     }
 }

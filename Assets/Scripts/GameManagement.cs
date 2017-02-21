@@ -6,6 +6,7 @@ public partial class Game : MonoBehaviour {
 
     void NextRound(bool randomShuffle = true)
     {
+        ShowInterstitial();
         uiPlaySpecialBar.Hide();
         AccumulatedCards = 0;
         NumActions = 0;
@@ -66,7 +67,9 @@ public partial class Game : MonoBehaviour {
         }
         else
         {
-            finalScoreText.text = ((int)Mathf.Pow(Me.TotalScore, 2.1f)).ToString();
+            int finalScore = (int)Mathf.Pow(Me.TotalScore, 2.1f);
+            OnGameWon(finalScore);
+            finalScoreText.text = finalScore.ToString();
             ToggleWinWindow(true);
         }
     }

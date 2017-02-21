@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 28c1f21612b114343bd5855c705ce2ff
-timeCreated: 1487259670
+timeCreated: 1487680485
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -50,7 +50,7 @@ TextureImporter:
     21300086: UI_SpellButtonFrame
     21300088: UI_SpellButtonCorners
     21300090: UI_Spellbook
-    21300092: UI Spellbook Large
+    21300092: Canon
     21300094: UI Health and Mana
     21300096: UI Tombstone
     21300098: RuinWhite_1
@@ -721,13 +721,13 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: UI Spellbook Large
+      name: Canon
       rect:
         serializedVersion: 2
-        x: 200
-        y: 800
-        width: 500
-        height: 400
+        x: 1
+        y: 1003
+        width: 99
+        height: 195
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
