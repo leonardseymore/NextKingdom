@@ -89,10 +89,11 @@ public partial class Game : MonoBehaviour {
     }
 	
 	void Update () {
-        if (!IsMyTurn)
+        if (!IsMyTurn || !Interactable)
         {
             return;
         }
+
 		if (Input.GetMouseButtonDown(0))
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current);

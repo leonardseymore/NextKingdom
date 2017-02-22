@@ -11,6 +11,8 @@ public partial class Game {
     private static string ACHIEVEMENT_SPAWN_ZOMBIE = "ACHIEVEMENT_SPAWN_ZOMBIE";
     private static string ACHIEVEMENT_WIN_A_GAME = "ACHIEVEMENT_WIN_A_GAME";
 
+
+
     Dictionary<string, string> IDS
     {
         get
@@ -33,8 +35,19 @@ public partial class Game {
         }
     }
 
+    bool IsMobile
+    {
+        get
+        {
+            return Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
+        }
+    }
+
     void StartSocial()
     {
+        if (!IsMobile){
+            return;
+        }
         Social.localUser.Authenticate((bool success) =>
         {
             Debug.Log("Social login success=" + success);
@@ -43,7 +56,7 @@ public partial class Game {
 
     public void UnlockAchievement(string achievementConst)
     {
-        if (PlayerPrefs.GetInt(achievementConst, 0) == 1)
+        if (!IsMobile)
         {
             return;
         }
@@ -52,6 +65,12 @@ public partial class Game {
         {
             return;
         }
+
+        if (PlayerPrefs.GetInt(achievementConst, 0) == 1)
+        {
+            return;
+        }
+
         Social.ReportProgress(IDS[achievementConst], 100.0f, (bool success) => {
             Debug.Log("Unlocked achievement " + success);
             if (success)
@@ -63,6 +82,11 @@ public partial class Game {
 
     void OnGameWon(int finalScore)
     {
+        if (!IsMobile)
+        {
+            return;
+        }
+
         if (!Social.localUser.authenticated)
         {
             return;
@@ -76,6 +100,11 @@ public partial class Game {
 
     void OnGameLost()
     {
+        if (!IsMobile)
+        {
+            return;
+        }
+
         if (!Social.localUser.authenticated)
         {
             return;
@@ -84,6 +113,11 @@ public partial class Game {
 
     public void ShowLeaderboards()
     {
+        if (!IsMobile)
+        {
+            return;
+        }
+
         if (!Social.localUser.authenticated)
         {
             Social.localUser.Authenticate((bool success) =>
@@ -101,6 +135,11 @@ public partial class Game {
 
     public void ShowAchievements()
     {
+        if (!IsMobile)
+        {
+            return;
+        }
+
         if (!Social.localUser.authenticated)
         {
             Social.localUser.Authenticate((bool success) =>
@@ -118,6 +157,11 @@ public partial class Game {
 
     private void CheckAndLogIn(UnityAction callback)
     {
+        if (!IsMobile)
+        {
+            return;
+        }
+
         if (!Social.localUser.authenticated)
         {
             Social.localUser.Authenticate((bool success) =>

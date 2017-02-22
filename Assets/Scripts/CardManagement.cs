@@ -153,13 +153,16 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator AddCardToGraveyardCR(Card card)
     {
+        Interactable = false;
         card.FaceDown = false;
         graveyard.Push(card);
         yield return card.SetParentCR(graveyardGo);
+        Interactable = true;
     }
 
     IEnumerator GetCardFromGraveyardCR()
     {
+        Interactable = false;
         if (graveyard.Count != 0)
         {
             CardHolder parent = tableaus[CurrentPlayerIdx];
@@ -169,10 +172,12 @@ public partial class Game : MonoBehaviour {
             ps.Play();
             yield return CurrentPlayer.AddCard(card, false);
         }
+        Interactable = true;
     }
 
     IEnumerator PlayCardCR(Card card)
     {
+        Interactable = false;
         AudioSourceCard.Play();
 
         LastCardPlayed = card;
@@ -289,8 +294,8 @@ public partial class Game : MonoBehaviour {
         {
             NumActions++;
         }
-        
-        yield return null;
+
+        Interactable = true;
     }
 
     bool StaysOnWaste(Card card)
@@ -394,5 +399,40 @@ public partial class Game : MonoBehaviour {
         NextRound(true);
         */
         throw new NotImplementedException("No more cards not implemented yet");
+    }
+
+    void UnhighlightCard()
+    {
+        if (HighlightedCard != null)
+        {
+            uiButtonBarPickCrazy8.SetActive(false);
+            HighlightedCard.Highlighted = false;
+            HighlightedCard = null;
+        }
+    }
+
+    IEnumerator RemoveTopWasteCard()
+    {
+        if (IsMyTurn)
+        {
+            UnhighlightCard();
+        }
+
+        waste.Remove(WasteCard);
+        WasteCard = waste.Tail();
+        if (WasteCard == null)
+        {
+            yield return EnqueueWasteCardCR(PopCard(false));
+            if (WasteCard.Rank == Rank.Eight)
+            {
+                Crazy8 = WasteCard.Suit;
+            }
+        }
+
+        uiPlaySpecialBar.ShowBasedOnCard(WasteCard, Crazy8);
+        if (IsMyTurn)
+        {
+            UpdateInstructions();
+        }
     }
 }

@@ -68,6 +68,11 @@ namespace BitAura
 
             return coll[0];
         }
+
+        public bool Remove(T item)
+        {
+            return coll.Remove(item);
+        }
     }
 
     public class Stack<T>

@@ -1,11 +1,27 @@
-﻿using BitAura;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public partial class Game : MonoBehaviour {
+    bool _interactable = true;
+    bool Interactable
+    {
+        get
+        {
+            return _interactable;
+        }
+        set
+        {
+            _interactable = value;
+            foreach (Button btn in FindObjectsOfType<Button>())
+            {
+                btn.interactable = value;
+            }
+        }
+    }
+
     Action _action = Action.DrawCard;
     Action Action
     {
@@ -96,7 +112,7 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator PlaySelectedCard()
     {
-        uiActionButton.interactable = false;
+        Interactable = false;
 
         HighlightedCard.Highlighted = false;
         yield return PlayCardCR(HighlightedCard);
@@ -118,7 +134,7 @@ public partial class Game : MonoBehaviour {
             Action = Action.EndTurn;
         }
         HighlightedCard = null;
-        uiActionButton.interactable = true;
+        Interactable = true;
     }
 
     void UpdateActionButton()
@@ -146,15 +162,5 @@ public partial class Game : MonoBehaviour {
     {
         Crazy8 = (Suit)crazy8;
         OnActionButtonClicked();
-    }
-
-    public void ApplyPotionAttack()
-    {
-        List<Card> cards = GetOffensiveCards(CurrentPlayerCards);
-    }
-
-    IEnumerator ApplyPotionCR()
-    {
-        yield return null;
     }
 }

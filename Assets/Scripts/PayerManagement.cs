@@ -379,8 +379,6 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator NextPlayerCR()
     {
-        yield return ShootCannon(CurrentPlayer, wasteGo.transform);
-
         bool canPlay = true;
         if (IsOffensive(WasteCard))
         {
@@ -607,6 +605,11 @@ public partial class Game : MonoBehaviour {
     void MyTurn()
     {
         OnMyTurn();
+        UpdateInstructions();
+    }
+
+    void UpdateInstructions()
+    {
         if (WasteCard.Rank == Rank.Eight)
         {
             SetInstruction("Play <color=" + SuitColor(Crazy8) + ">" + SuitColor(Crazy8) + "</color>, a <b>Totem</b> or draw a card");

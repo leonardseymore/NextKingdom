@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 28c1f21612b114343bd5855c705ce2ff
-timeCreated: 1487680485
+timeCreated: 1487743341
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -114,6 +114,9 @@ TextureImporter:
     21300214: NKUI_0
     21300216: Potion_TempressShield
     21300218: GreyButton
+    21300220: Mafia
+    21300222: Shovel
+    21300224: MafiaBoss
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -1196,6 +1199,45 @@ TextureImporter:
         y: 1499
         width: 101
         height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Mafia
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 902
+        width: 339
+        height: 296
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shovel
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 902
+        width: 66
+        height: 297
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MafiaBoss
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 900
+        width: 186
+        height: 299
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

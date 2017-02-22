@@ -41,7 +41,7 @@ public partial class Game : MonoBehaviour {
         AddCardToGraveyard(cardToSteal);
     }
 
-    IEnumerator ShootCannon(Seat player, Transform target)
+    IEnumerator ShootCannonCR(Seat player, Transform target)
     {
         GameObject cannon = player.PlayerAvatar.GetRandomCannon;
 

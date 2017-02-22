@@ -9,6 +9,7 @@ public partial class Game : MonoBehaviour {
     public GameObject InfoWindow;
     public GameObject WinWindow;
     public GameObject LooseWindow;
+    public GameObject MafiaWindow;
 
     public void ToggleSpellWindow(bool visible)
     {
@@ -38,5 +39,11 @@ public partial class Game : MonoBehaviour {
     {
         Camera.main.GetComponent<BlurOptimized>().enabled = visible;
         LooseWindow.SetActive(visible);
+    }
+
+    public void ToggleMafiaWindow(bool visible)
+    {
+        Camera.main.GetComponent<BlurOptimized>().enabled = visible;
+        MafiaWindow.SetActive(visible);
     }
 }
