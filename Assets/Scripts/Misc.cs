@@ -41,6 +41,13 @@ public partial class Game : MonoBehaviour {
         AddCardToGraveyard(cardToSteal);
     }
 
+    IEnumerator SpawnZombieKillGoCR(GameObject goToKill)
+    {
+        Zombie zombie = Instantiate(ZombiePrefab);
+        zombie.KillAndDie(graveyardGo, goToKill);
+        yield return new WaitForZombie(zombie);
+    }
+
     IEnumerator ShootCannonCR(Seat player, Transform target)
     {
         GameObject cannon = player.PlayerAvatar.GetRandomCannon;
@@ -53,6 +60,7 @@ public partial class Game : MonoBehaviour {
         {
             Fireball fireball = Instantiate(FireballPrefab, cannon.transform, false);
             fireball.Initialize(target);
+            AudioSourceCannon.Play();
             yield return new WaitForFireball(fireball);
         }
     }

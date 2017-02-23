@@ -15,9 +15,9 @@ public partial class Game : MonoBehaviour {
         set
         {
             _interactable = value;
-            foreach (Button btn in FindObjectsOfType<Button>())
+            foreach (GameObject btn in GameObject.FindGameObjectsWithTag("PlayerControls"))
             {
-                btn.interactable = value;
+                btn.GetComponent<Button>().interactable = value;
             }
         }
     }

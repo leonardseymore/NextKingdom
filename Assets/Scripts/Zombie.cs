@@ -12,14 +12,17 @@ public class Zombie : CardHolder {
 
     CardHolder GraveyardGo;
     Card CardToSteal;
+    GameObject GoToKill;
 
     bool HasCard = false;
     bool StoleCard = false;
+    bool KilledGo = false;
 
     float Speed = 3f;
 
     public ParticleSystem PSZombieAwakes;
     public ParticleSystem PSZombieDead;
+    public ParticleSystem PSZombieBlood;
 
     void SpawnPS(ParticleSystem prefab, Transform trans)
     {
@@ -40,15 +43,39 @@ public class Zombie : CardHolder {
         SpawnPS(PSZombieAwakes, GraveyardGo.transform);
     }
 
+    public void KillAndDie(CardHolder graveyardGo, GameObject goToKill)
+    {
+        GraveyardGo = graveyardGo;
+        transform.localPosition = GraveyardGo.transform.position;
+        GoToKill = goToKill;
+        SpawnPS(PSZombieAwakes, GraveyardGo.transform);
+    }
+
     private void Update()
     {
-        if (CardToSteal == null || StoleCard)
+        if (CardToSteal != null)
         {
-            return;
+            if (StoleCard)
+            {
+                return;
+            }
+            ContinueStealingCard();
         }
+        else if (GoToKill != null)
+        {
+            if (KilledGo)
+            {
+                return;
+            }
+            Animator.SetInteger("state", 1);
+            ContinueKillingGo();
+        }
+    }
 
+    void ContinueStealingCard()
+    {
         float step = Speed * Time.deltaTime;
-        
+
         if (HasCard)
         {
             transform.position = Vector3.MoveTowards(transform.position, GraveyardGo.transform.position, step);
@@ -71,6 +98,21 @@ public class Zombie : CardHolder {
                 CardToSteal.Visible = false;
                 Animator.SetInteger("state", 1);
             }
+        }
+    }
+
+    void ContinueKillingGo()
+    {
+        float step = Speed * Time.deltaTime;
+
+        transform.position = Vector3.MoveTowards(transform.position, GoToKill.transform.position, step);
+        SpriteRenderer.flipX = transform.position.x > GoToKill.transform.position.x;
+        if (transform.position == GoToKill.transform.position)
+        {
+            SpawnPS(PSZombieBlood, transform);
+            Animator.SetInteger("state", 2);
+            StartCoroutine(DestroyThis());
+            KilledGo = true;
         }
     }
 

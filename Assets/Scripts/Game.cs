@@ -52,7 +52,11 @@ public partial class Game : MonoBehaviour {
     Texture2D DefaultCursorTex;
 
     Dictionary<SpellType, Spell> Spells = new Dictionary<SpellType, Spell>();
+    public AudioSource AudioSourceButton;
     public AudioSource AudioSourceCard;
+    public AudioSource AudioSourceCannon;
+    public AudioSource AudioSourceExplosion;
+    public AudioSource AudioSourceTeleport;
     #endregion
 
     #region Lifecycle

@@ -49,6 +49,7 @@ public partial class Game : MonoBehaviour {
             HighlightedCard.Highlighted = false;
             HighlightedCard = null;
         }
+        UiGangsterPanel.ResetToDefault();
         NextRound();
     }
 

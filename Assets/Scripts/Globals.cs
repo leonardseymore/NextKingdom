@@ -94,4 +94,5 @@ public class Globals
 {
     public static float LerpDuration = 0.8f;
     public static float WaitTime = 0.8f;
+    public static int GangstersPerPlayer = 5;
 }

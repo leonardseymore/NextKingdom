@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 28c1f21612b114343bd5855c705ce2ff
-timeCreated: 1487743341
+timeCreated: 1487759306
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -117,6 +117,8 @@ TextureImporter:
     21300220: Mafia
     21300222: Shovel
     21300224: MafiaBoss
+    21300226: Gangster1
+    21300228: Gangster2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -1238,6 +1240,32 @@ TextureImporter:
         y: 900
         width: 186
         height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Gangster1
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 900
+        width: 149
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Gangster2
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 900
+        width: 144
+        height: 298
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -100,6 +100,22 @@ public partial class Game : MonoBehaviour {
         public int HandValue;
         public int Score;
         public int TotalScore;
+        public int AvailableGangsters;
+        public int DeadGangsters;
+        public int RemainingGangsters
+        {
+            get
+            {
+                return AvailableGangsters - DeadGangsters;
+            }
+        }
+        public bool HasGangsters
+        {
+            get
+            {
+                return RemainingGangsters > 0;
+            }
+        }
 
         HashSet<PotionType> ActivePotions;
 
@@ -168,6 +184,8 @@ public partial class Game : MonoBehaviour {
 
         public Seat(int playerIdx, PlayerType playerType, CardHolder tableau, PlayerAvatar playerAvatar)
         {
+            AvailableGangsters = Globals.GangstersPerPlayer;
+            DeadGangsters = 0;
             PlayerIdx = playerIdx;
             PlayerType = playerType;
             Tableau = tableau;
