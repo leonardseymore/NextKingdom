@@ -7,6 +7,24 @@ public partial class Game : MonoBehaviour {
     public GangsterPanel UiGangsterPanel;
     public Gangster GraveyardGangster;
 
+    public void DoSelectedMafiaJob()
+    {
+        StartCoroutine(DoSelectedMafiaJobCR(GetSelectedMafiaJobFromWindow()));
+    }
+
+    IEnumerator DoSelectedMafiaJobCR(MafiaJobType job)
+    {
+        switch (job)
+        {
+            case MafiaJobType.DigJob:
+                yield return MafiaDigJobCR();
+                break;
+            case MafiaJobType.CannonFodder:
+                yield return MafiaCannonFodderCR();
+                break;
+        }
+    }
+
     public void MafiaCannonFodder()
     {
         StartCoroutine(MafiaCannonFodderCR());

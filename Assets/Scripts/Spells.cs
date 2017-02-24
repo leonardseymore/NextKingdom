@@ -19,7 +19,7 @@ public partial class Game : MonoBehaviour {
         return card;
     }
 
-    IEnumerator CastCR(SpellType spellType, bool endTurn = false)
+    IEnumerator CastCR(SpellType spellType)
     {
         Spell spell = Spells[spellType];
         if (CurrentPlayer.AvailableRuins < spell.Cost)
@@ -28,13 +28,16 @@ public partial class Game : MonoBehaviour {
         }
         else
         {
+            bool endTurn = false;
             CurrentPlayer.AvailableRuins -= spell.Cost;
             switch (spellType)
             {
-                case SpellType.Krakin:
+                case SpellType.Kraken:
+                    endTurn = true;
                     yield return CastKrakinCR();
                     break;
                 case SpellType.Alruana:
+                    endTurn = true;
                     yield return CastAlruanaCR();
                     break;
                 case SpellType.Dracula:
@@ -73,9 +76,14 @@ public partial class Game : MonoBehaviour {
         }
     }
 
+    public void CastSelectedSpell()
+    {
+        StartCoroutine(CastCR(GetSelectedSpellFromWindow()));
+    }
+
     public void CastKrakin()
     {
-        StartCoroutine(CastCR(SpellType.Krakin, true));
+        StartCoroutine(CastCR(SpellType.Kraken));
     }
 
     IEnumerator CastKrakinCR()
@@ -101,7 +109,7 @@ public partial class Game : MonoBehaviour {
 
     public void CastAlruana()
     {
-        StartCoroutine(CastCR(SpellType.Alruana, true));
+        StartCoroutine(CastCR(SpellType.Alruana));
     }
 
     IEnumerator CastAlruanaCR()

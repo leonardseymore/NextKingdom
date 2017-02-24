@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using BitAura;
+using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
 public partial class Game : MonoBehaviour {
@@ -10,6 +12,33 @@ public partial class Game : MonoBehaviour {
     public GameObject WinWindow;
     public GameObject LooseWindow;
     public GameObject MafiaWindow;
+
+    public ToggleGroup MafiaWindowToggleGroup;
+    public ToggleGroup SpellWindowToggleGroup;
+
+    public SpellType GetSelectedSpellFromWindow()
+    {
+        Toggle activeToggle = null;
+        foreach (Toggle t in SpellWindowToggleGroup.ActiveToggles())
+        {
+            activeToggle = t;
+            break;
+        }
+        SpellType spellType = Utils.ParseEnum<SpellType>(activeToggle.name);
+        return spellType;
+    }
+
+    public MafiaJobType GetSelectedMafiaJobFromWindow()
+    {
+        Toggle activeToggle = null;
+        foreach (Toggle t in MafiaWindowToggleGroup.ActiveToggles())
+        {
+            activeToggle = t;
+            break;
+        }
+        MafiaJobType job = Utils.ParseEnum<MafiaJobType>(activeToggle.name);
+        return job;
+    }
 
     public void ToggleSpellWindow(bool visible)
     {

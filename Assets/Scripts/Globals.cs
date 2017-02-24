@@ -30,7 +30,12 @@ public enum Action
 
 public enum SpellType
 {
-    Krakin = 0, Alruana, Dracula
+    Kraken = 0, Alruana, Dracula
+}
+
+public enum MafiaJobType
+{
+    DigJob = 0, CannonFodder
 }
 
 public class Spell

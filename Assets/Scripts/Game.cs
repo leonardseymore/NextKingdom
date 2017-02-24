@@ -62,7 +62,7 @@ public partial class Game : MonoBehaviour {
     #region Lifecycle
     void Awake()
     {
-        Spells.Add(SpellType.Krakin, new Spell(SpellType.Krakin, 10, true));
+        Spells.Add(SpellType.Kraken, new Spell(SpellType.Kraken, 10, true));
         Spells.Add(SpellType.Alruana, new Spell(SpellType.Alruana, 8, true));
         Spells.Add(SpellType.Dracula, new Spell(SpellType.Dracula, 3, false));
 
