@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public partial class Game : MonoBehaviour {
@@ -166,5 +167,12 @@ public partial class Game : MonoBehaviour {
     {
         Crazy8 = (Suit)crazy8;
         OnActionButtonClicked();
+    }
+
+    public void LoadSceneIntro()
+    {
+        StopAllCoroutines();
+        PlayerPrefs.SetInt("WatchedIntro", 0);
+        SceneManager.LoadScene("Intro", LoadSceneMode.Single);
     }
 }

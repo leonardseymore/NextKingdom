@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Intro : MonoBehaviour {
 
@@ -11,6 +12,14 @@ public class Intro : MonoBehaviour {
 
     public Sprite[] Sprites;
     public string[] scripts;
+
+    private void Awake()
+    {
+        if(PlayerPrefs.GetInt("WatchedIntro", 0) == 1)
+        {
+            LoadSceneGame();
+        }
+    }
 
     private void Start()
     {
@@ -54,6 +63,21 @@ public class Intro : MonoBehaviour {
                 waitForSeconds += 0.5f;
             }
             yield return new WaitForSeconds(waitForSeconds);
+        }
+    }
+
+    public void LoadSceneGame()
+    {
+        StopAllCoroutines();
+        PlayerPrefs.SetInt("WatchedIntro", 1);
+        SceneManager.LoadScene("Main", LoadSceneMode.Single);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            LoadSceneGame();
         }
     }
 }
