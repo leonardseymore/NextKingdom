@@ -48,10 +48,8 @@ public partial class Game : MonoBehaviour {
         yield return new WaitForZombie(zombie);
     }
 
-    IEnumerator ShootCannonCR(Seat player, Transform target)
+    IEnumerator ShootCannonCR(GameObject cannon, Transform target)
     {
-        GameObject cannon = player.PlayerAvatar.GetRandomCannon;
-
         Vector3 dir = target.position - cannon.transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         cannon.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
@@ -62,6 +60,39 @@ public partial class Game : MonoBehaviour {
             fireball.Initialize(target);
             AudioSourceCannon.Play();
             yield return new WaitForFireball(fireball);
+        }
+    }
+
+    IEnumerator ShootCannonCR(Seat player, Transform target)
+    {
+        yield return ShootCannonCR(player.PlayerAvatar.GetRandomCannon, target);
+    }
+
+    IEnumerator ShootWasteCardCR()
+    {
+        if (AccumulatedCards > 0)
+        {
+            Time.timeScale = 0.2f;
+            GameObject cannon = CurrentPlayer.PlayerAvatar.GetRandomCannon;
+            yield return ShootCannonCR(cannon, uiAccumulatedCardsGo.transform);
+
+            AudioSource audio = AccumulatedCardsLightingBolt.GetComponent<AudioSource>();
+            AccumulatedCardsLightingBolt.Play();
+            audio.Play();
+
+            Fireball fireball = Instantiate(FireballPrefab, uiAccumulatedCardsGo.transform, false);
+            fireball.Initialize(cannon.transform);
+            AudioSourceCannon.Play();
+            yield return new WaitForFireball(fireball);
+
+            AccumulatedCards = 0;
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            yield return ShootCannonCR(CurrentPlayer, WasteCard.transform);
+            yield return AddCardToGraveyardCR(WasteCard);
+            yield return RemoveTopWasteCard();
         }
     }
 }

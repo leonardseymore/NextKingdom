@@ -484,6 +484,10 @@ public partial class Game : MonoBehaviour {
                         yield return CastRandom();
                         endTurn = LastCastSpell != null && LastCastSpell.EndsTurn;
                     }
+                    else if (UnityEngine.Random.Range(0, 10) < 10 && CurrentPlayer.HasGangsters)
+                    {
+                        yield return ShootWasteCardCR();
+                    }
                 }
 
                 if (!endTurn)

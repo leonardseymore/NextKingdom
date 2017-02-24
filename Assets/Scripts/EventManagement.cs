@@ -112,6 +112,10 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator PlaySelectedCard()
     {
+        if (!IsMyTurn)
+        {
+            yield break;
+        }
         Interactable = false;
 
         HighlightedCard.Highlighted = false;
