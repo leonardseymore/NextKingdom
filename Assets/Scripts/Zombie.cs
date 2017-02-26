@@ -35,6 +35,11 @@ public class Zombie : CardHolder {
     {
     }
 
+    void OnMouseDown()
+    {
+        Debug.Log("Sprite Clicked");
+    }
+
     public void Initialize(CardHolder graveyardGo, Card cardToSteal)
     {
         GraveyardGo = graveyardGo;

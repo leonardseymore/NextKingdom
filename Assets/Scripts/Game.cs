@@ -65,9 +65,11 @@ public partial class Game : MonoBehaviour {
         Spells.Add(SpellType.Kraken, new Spell(SpellType.Kraken, 10, true));
         Spells.Add(SpellType.Alruana, new Spell(SpellType.Alruana, 8, true));
         Spells.Add(SpellType.Dracula, new Spell(SpellType.Dracula, 3, false));
+        Spells.Add(SpellType.Tornado, new Spell(SpellType.Tornado, 0, false));
 
         DefaultCursorTex = Utils.TextureFromSprite(DefaultCursorSprite);
         SetDefaultCursor();
+        AwakeAudio();
     }
 
     void SetDefaultCursor()
@@ -113,7 +115,7 @@ public partial class Game : MonoBehaviour {
                 if (card != null && MyCards.Contains(card))
                 {
                     CardTapped(card);
-                }
+                } 
             }
         }
 	}
@@ -124,6 +126,7 @@ public partial class Game : MonoBehaviour {
         {
             return;
         }
+        AudioPlayButtonClick();
         if (card == HighlightedCard)
         {
             HighlightedCard = null;

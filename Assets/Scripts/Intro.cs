@@ -3,8 +3,11 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using BitAura;
 
 public class Intro : MonoBehaviour {
+
+    public Sprite DefaultCursorSprite;
 
     public Animator IntroAnimator;
     public Image UiImage;
@@ -13,17 +16,18 @@ public class Intro : MonoBehaviour {
     public Sprite[] Sprites;
     public string[] scripts;
 
-    private void Awake()
-    {
-        if(PlayerPrefs.GetInt("WatchedIntro", 0) == 1)
-        {
-            LoadSceneGame();
-        }
-    }
 
     private void Start()
     {
-        StartCoroutine(IntroCR());
+        if (PlayerPrefs.GetInt("WatchedIntro", 0) == 1)
+        {
+            LoadSceneGame();
+        }
+        else
+        {
+            Cursor.SetCursor(Utils.TextureFromSprite(DefaultCursorSprite), Vector2.zero, CursorMode.ForceSoftware);
+            StartCoroutine(IntroCR());
+        }
     }
 
     IEnumerator IntroCR()

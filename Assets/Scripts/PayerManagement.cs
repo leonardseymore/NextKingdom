@@ -391,6 +391,7 @@ public partial class Game : MonoBehaviour {
         Time.timeScale = 0.3f;
         ParticleSystem ps = Instantiate(EliminationPSPrefab, seat.PlayerAvatar.PortraitImage.transform, false);
         ps.Play();
+        AudioPlayExplosion();
         yield return new WaitForSeconds(0.3f);
         Time.timeScale = 1f;
     }
@@ -484,7 +485,7 @@ public partial class Game : MonoBehaviour {
                         yield return CastRandom();
                         endTurn = LastCastSpell != null && LastCastSpell.EndsTurn;
                     }
-                    else if (UnityEngine.Random.Range(0, 10) < 10 && CurrentPlayer.HasGangsters)
+                    else if (UnityEngine.Random.Range(0, 10) < 1 && CurrentPlayer.HasGangsters)
                     {
                         yield return ShootWasteCardCR();
                     }

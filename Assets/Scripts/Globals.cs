@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Suit
@@ -7,6 +8,7 @@ public enum Suit
     Spade = 1, Diamond = 2, Heart = 3, Club = 4
 }
 
+[Serializable]
 public enum Rank
 {
     Joker = -1, Kraken = -2, Alruana = -3, Dracula = -4, Tornado = -5,
@@ -28,9 +30,10 @@ public enum Action
     DrawCard, PlayCard, EndTurn, PickCrazy8
 }
 
+[Serializable]
 public enum SpellType
 {
-    Kraken = 0, Alruana, Dracula
+    Kraken = 0, Alruana, Dracula, Tornado
 }
 
 public enum MafiaJobType

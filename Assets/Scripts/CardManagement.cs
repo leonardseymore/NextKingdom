@@ -187,9 +187,14 @@ public partial class Game : MonoBehaviour {
         switch (card.Rank)
         {
             case Rank.Ace:
+                if (IsOffensive(WasteCard))
+                {
+                    AudioPlayShield();
+                }
                 AccumulatedCards = 0;
                 break;
             case Rank.Two:
+                AudioPlaySword();
                 AccumulatedCards += 2;
                 if (CurrentPlayerHasPotion(PotionType.BasicSword))
                 {
@@ -198,6 +203,7 @@ public partial class Game : MonoBehaviour {
                 }
                 break;
             case Rank.Joker:
+                AudioPlaySword();
                 AccumulatedCards += 5;
                 if (CurrentPlayerHasPotion(PotionType.BasicSword))
                 {
@@ -208,8 +214,14 @@ public partial class Game : MonoBehaviour {
             case Rank.Seven:
                 SkipCounter = SkipCounter == 1 ? 0 : 1;
                 break;
+            case Rank.Eight:
+                AudioPlayTotem();
+                break;
             case Rank.Jack:
                 SwitchDirection();
+                break;
+            case Rank.Queen:
+                AudioPlayQueen();
                 break;
         }
 
@@ -361,6 +373,10 @@ public partial class Game : MonoBehaviour {
             NoMoreCards();
         }
         */
+        if (maxCards == -1 && AccumulatedCards > 5)
+        {
+            AudioPlayEvilLaugh();
+        }
 
         int numCardsDrawn = 0;
         int nextSeatToStealFrom = CurrentPlayerIdx + Direction;

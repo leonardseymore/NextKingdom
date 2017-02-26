@@ -43,6 +43,9 @@ public partial class Game : MonoBehaviour {
                 case SpellType.Dracula:
                     yield return CastDraculaCR();
                     break;
+                case SpellType.Tornado:
+                    yield return CastTornadoCR();
+                    break;
             }
             LastCastSpell = spell;
             if (endTurn)
@@ -88,6 +91,7 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator CastKrakinCR()
     {
+        AudioPlayMonster();
         Card card = SpawnSpellCard(Rank.Kraken);
         yield return new WaitForSeconds(1f);
         yield return PlayCardCR(card);
@@ -114,6 +118,7 @@ public partial class Game : MonoBehaviour {
 
     IEnumerator CastAlruanaCR()
     {
+        AudioPlayQueen();
         Card card = SpawnSpellCard(Rank.Alruana);
         yield return new WaitForSeconds(1f);
         yield return PlayCardCR(card);
@@ -144,6 +149,32 @@ public partial class Game : MonoBehaviour {
             yield return SpawnZombieCR();
         }
         
+        DestroyImmediate(card.gameObject);
+
+        if (IsMyTurn)
+        {
+            UnlockAchievement(ACHIEVEMENT_CAST_DRACULA);
+        }
+    }
+
+    IEnumerator CastTornadoCR()
+    {
+        Card card = SpawnSpellCard(Rank.Tornado);
+        yield return new WaitForSeconds(1f);
+        yield return PlayCardCR(card);
+
+        if (graveyard.Count > 0)
+        {
+            ParticleSystem bats = Instantiate(PSBatsPrefab, graveyardGo.transform, false);
+            bats.Play();
+            yield return GetCardFromGraveyardCR();
+            yield return new WaitForSeconds(2f);
+        }
+        else
+        {
+            yield return SpawnZombieCR();
+        }
+
         DestroyImmediate(card.gameObject);
 
         if (IsMyTurn)

@@ -84,8 +84,11 @@ public partial class Game : MonoBehaviour {
             fireball.Initialize(cannon.transform);
             AudioSourceCannon.Play();
             yield return new WaitForFireball(fireball);
+            AudioPlayExplosion();
 
             AccumulatedCards = 0;
+
+            yield return new WaitForSeconds(0.5f);
             Time.timeScale = 1f;
         }
         else
