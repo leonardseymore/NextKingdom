@@ -62,6 +62,7 @@ public partial class Game : MonoBehaviour {
     {
         Camera.main.GetComponent<BlurOptimized>().enabled = visible;
         WinWindow.SetActive(visible);
+        WinWindow.GetComponent<WinWindow>().Initialize(LeveledUp, Level, LevelUpProgress, !Me.Eliminated);
     }
 
     public void ToggleLooseWindow(bool visible)

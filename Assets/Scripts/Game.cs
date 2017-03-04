@@ -62,10 +62,11 @@ public partial class Game : MonoBehaviour {
     #region Lifecycle
     void Awake()
     {
+        AwakeLevelManagement();
         Spells.Add(SpellType.Kraken, new Spell(SpellType.Kraken, 10, true));
         Spells.Add(SpellType.Alruana, new Spell(SpellType.Alruana, 8, true));
         Spells.Add(SpellType.Dracula, new Spell(SpellType.Dracula, 3, false));
-        Spells.Add(SpellType.Tornado, new Spell(SpellType.Tornado, 0, false));
+        Spells.Add(SpellType.Tornado, new Spell(SpellType.Tornado, 10000, false));
 
         DefaultCursorTex = Utils.TextureFromSprite(DefaultCursorSprite);
         SetDefaultCursor();
@@ -88,7 +89,7 @@ public partial class Game : MonoBehaviour {
         CreateCards();
         for (int i = 0; i < NumPlayers; i++)
         {
-            Seats.Add(new Seat(i, i == 0 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
+            Seats.Add(new Seat(this, i, i == 0 ? PlayerType.Human : PlayerType.Computer, tableaus[i], playerAvatars[i]));
         }
         Restart();
         StartAds();

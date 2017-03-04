@@ -5,7 +5,30 @@ using UnityEngine;
 
 public partial class Game : MonoBehaviour {
     int NumActions = 0;
-    int Direction = 1;
+
+    public delegate void DirectionChangeAction();
+    public static event DirectionChangeAction OnDirectionChanged;
+
+    int _direction = 1;
+    [HideInInspector]
+    public int Direction
+    {
+        get
+        {
+            return _direction;
+        }
+        set
+        {
+            if (_direction != value)
+            {
+                _direction = value;
+                if (OnDirectionChanged != null)
+                {
+                    OnDirectionChanged();
+                }
+            }
+        }
+    }
     int CurrentPlayerIdx;
     int MyPlayerIdx;
     int NumPlayers = 4;
@@ -14,6 +37,11 @@ public partial class Game : MonoBehaviour {
     {
         get
         {
+            if (Level < MaxLevel)
+            {
+                return 0;
+            }
+
             switch (RemainingPlayers)
             {
                 case 4:
@@ -92,12 +120,25 @@ public partial class Game : MonoBehaviour {
 
     class Seat : IComparable<Seat>
     {
+        Game Game;
         public int PlayerIdx;
         public PlayerType PlayerType;
         public List<Card> Cards;
         public CardHolder Tableau;
         public PlayerAvatar PlayerAvatar;
-        public int HandValue;
+        private int _handValue;
+        public int HandValue
+        {
+            get
+            {
+                return _handValue;
+            }
+            set
+            {
+                _handValue = value;
+                PlayerAvatar.HandValue = value;
+            }
+        }
         public int Score;
         public int TotalScore;
         public int AvailableGangsters;
@@ -182,8 +223,9 @@ public partial class Game : MonoBehaviour {
             }
         }
 
-        public Seat(int playerIdx, PlayerType playerType, CardHolder tableau, PlayerAvatar playerAvatar)
+        public Seat(Game game, int playerIdx, PlayerType playerType, CardHolder tableau, PlayerAvatar playerAvatar)
         {
+            Game = game;
             AvailableGangsters = Globals.GangstersPerPlayer;
             DeadGangsters = 0;
             PlayerIdx = playerIdx;
@@ -208,6 +250,7 @@ public partial class Game : MonoBehaviour {
                 Score = 0;
                 WinProgress = 0;
             }
+            HandValue = 0;
             Cards = new List<Card>();
         }
 
@@ -247,13 +290,13 @@ public partial class Game : MonoBehaviour {
         void ActivateRandomPotions()
         {
             ActivePotions = new HashSet<PotionType>();
-            if (UnityEngine.Random.Range(0, 10) < 5)
+            if (UnityEngine.Random.Range(0, 10) < 2)
             {
                 ActivePotions.Add(PotionType.BasicSword);
             }
 
             
-            if (UnityEngine.Random.Range(0, 10) < 5)
+            if (UnityEngine.Random.Range(0, 10) < 3)
             {
                 ActivePotions.Add(DefensivePotions[UnityEngine.Random.Range(0, DefensivePotions.Count)]);
             }
@@ -261,7 +304,7 @@ public partial class Game : MonoBehaviour {
 
         public void OnMyTurnStarted()
         {
-            if (IsComputer)
+            if (IsComputer && Game.Level >= LevelRequirement.Potions)
             {
                 ActivateRandomPotions();
             }
@@ -478,16 +521,30 @@ public partial class Game : MonoBehaviour {
                 yield return new WaitForSeconds(Globals.WaitTime);
 
                 bool endTurn = false;
-                if (!IsSpellCard(WasteCard))
+
+                bool castSpell = false;
+                if (Level >= LevelRequirement.Spells)
                 {
-                    if (UnityEngine.Random.Range(0, 10) < 2)
+                    if (!IsSpellCard(WasteCard))
                     {
-                        yield return CastRandom();
-                        endTurn = LastCastSpell != null && LastCastSpell.EndsTurn;
+                        if (UnityEngine.Random.Range(0, 10) < 2)
+                        {
+                            yield return CastRandom();
+                            endTurn = LastCastSpell != null && LastCastSpell.EndsTurn;
+                            castSpell = LastCastSpell != null;
+                        }
                     }
-                    else if (UnityEngine.Random.Range(0, 10) < 1 && CurrentPlayer.HasGangsters)
+                }
+
+                if (Level >= LevelRequirement.Mafia)
+                {
+                    if (!endTurn)
                     {
-                        yield return ShootWasteCardCR();
+
+                        if (UnityEngine.Random.Range(0, 10) < 1 && CurrentPlayer.HasGangsters)
+                        {
+                            yield return ShootWasteCardCR();
+                        }
                     }
                 }
 
@@ -496,7 +553,7 @@ public partial class Game : MonoBehaviour {
                     Card card = GetBestCardToPlay(CurrentPlayerCards);
                     if (card != null)
                     {
-                        Debug.Log(CurrentPlayer + " has card " + card + " to play");
+                        //Debug.Log(CurrentPlayer + " has card " + card + " to play");
                         if (card.Rank == Rank.Eight)
                         {
                             Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);
@@ -509,7 +566,7 @@ public partial class Game : MonoBehaviour {
                             card = GetBestCardToPlay(CurrentPlayerCards);
                             while (card != null && !IsEndsTurnCard(card))
                             {
-                                Debug.Log(CurrentPlayer + " has another card " + card + " to play");
+                                //Debug.Log(CurrentPlayer + " has another card " + card + " to play");
                                 if (card.Rank == Rank.Eight)
                                 {
                                     Crazy8 = (Suit)UnityEngine.Random.Range(1, 5);

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public partial class Game : MonoBehaviour {
+public partial class Game : MonoBehaviour
+{
     bool GameOver;
     int Round;
 
@@ -18,7 +19,7 @@ public partial class Game : MonoBehaviour {
             card.Reset();
             card.SetParent(stackGo);
         }
-        
+
         //uiResultsPanel.SetActive(false);
         uiButtonBarPickCrazy8.SetActive(false);
 
@@ -35,6 +36,7 @@ public partial class Game : MonoBehaviour {
 
     public void Restart()
     {
+        LeveledUp = false;
         StopAllCoroutines();
         GameOver = false;
         Round = 0;
@@ -62,16 +64,20 @@ public partial class Game : MonoBehaviour {
     {
         GameOver = true;
 
+        int finalScore = (int)Mathf.Pow(Me.TotalScore, 2.1f);
+        
+        finalScoreText.text = finalScore.ToString();
         if (Me.Eliminated)
         {
-            ToggleLooseWindow(true);
+            OnGameLost();
+            GamesLost++;
         }
         else
         {
-            int finalScore = (int)Mathf.Pow(Me.TotalScore, 2.1f);
             OnGameWon(finalScore);
-            finalScoreText.text = finalScore.ToString();
-            ToggleWinWindow(true);
+            GamesWon++;
         }
+        
+        ToggleWinWindow(true);
     }
 }

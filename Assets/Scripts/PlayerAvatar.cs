@@ -18,6 +18,15 @@ public class PlayerAvatar : MonoBehaviour {
     public GameObject DefensiveShieldRays;
 
     public GameObject[] Cannons;
+    public Text HandValueText;
+
+    public int HandValue
+    {
+        set
+        {
+            HandValueText.text = value.ToString();
+        }
+    }
 
     private void Awake()
     {
@@ -45,6 +54,7 @@ public class PlayerAvatar : MonoBehaviour {
 
     public void ResetToDefault()
     {
+        HandValueText.text = "";
         AvailableRuins = 0;
         PortraitImage.sprite = PortraitSprite;
 

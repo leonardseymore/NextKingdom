@@ -13,7 +13,10 @@ public partial class Game : MonoBehaviour {
     int CardsPerPlayer
     {
         get
-        {
+        { 
+            if(CardsToDealBasedOnLevel > 0) {
+                return CardsToDealBasedOnLevel;
+            }
             if (RemainingPlayers == 2)
             {
                 return 7;
@@ -46,8 +49,11 @@ public partial class Game : MonoBehaviour {
 
         foreach (Card card in allCards)
         {
-            card.gameObject.SetActive(true);
-            deck.Push(card);
+            if (AvailableRanks.Contains(card.Rank))
+            {
+                card.gameObject.SetActive(true);
+                deck.Push(card);
+            }
         }
 
         for (int j = 0; j < tableaus.Length; j++)

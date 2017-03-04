@@ -30,6 +30,13 @@ public enum Action
     DrawCard, PlayCard, EndTurn, PickCrazy8
 }
 
+public class LevelRequirement
+{
+    public static int Spells = 7;
+    public static int Potions = 8;
+    public static int Mafia = 9;
+}
+
 [Serializable]
 public enum SpellType
 {

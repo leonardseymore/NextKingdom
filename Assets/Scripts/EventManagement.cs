@@ -103,6 +103,7 @@ public partial class Game : MonoBehaviour {
                 break;
             case Action.PickCrazy8:
             case Action.PlayCard:
+                Interactable = false;
                 StartCoroutine(PlaySelectedCard());
                 break;
             case Action.EndTurn:
@@ -117,7 +118,6 @@ public partial class Game : MonoBehaviour {
         {
             yield break;
         }
-        Interactable = false;
 
         HighlightedCard.Highlighted = false;
         yield return PlayCardCR(HighlightedCard);

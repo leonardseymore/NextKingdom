@@ -155,9 +155,10 @@ public class Card : MonoBehaviour {
     #endregion
 
     Game game;
+
     private void Awake()
     {
-        game = GameObject.Find("_GLOBAL_").GetComponent<Game>();
+        game = FindObjectOfType<Game>();
     }
 
     public void Reset()
