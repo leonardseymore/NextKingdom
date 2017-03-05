@@ -125,8 +125,8 @@ public partial class Game : MonoBehaviour {
 
     public void ResetProgress()
     {
+        Xp = 0;
         Level = 0;
-        GamesWon = 0;
         Restart();
     }
 

@@ -33,9 +33,7 @@ public partial class Game : MonoBehaviour {
     IEnumerator MafiaCannonFodderCR()
     {
         Interactable = false;
-        yield return ShootCannonCR(CurrentPlayer, WasteCard.transform);
-        yield return AddCardToGraveyardCR(WasteCard);
-        yield return RemoveTopWasteCard();
+        yield return ShootWasteCardCR();
         Interactable = true;
     }
 
