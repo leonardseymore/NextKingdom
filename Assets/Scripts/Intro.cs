@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using BitAura;
+using UnityStandardAssets.ImageEffects;
 
 public class Intro : MonoBehaviour {
 
@@ -19,6 +20,15 @@ public class Intro : MonoBehaviour {
 
     private void Start()
     {
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            SunShafts sunshafts = Camera.main.GetComponent<SunShafts>();
+            sunshafts.enabled = false;
+
+            BloomOptimized bloom = Camera.main.GetComponent<BloomOptimized>();
+            bloom.enabled = false;
+        }
+
         if (PlayerPrefs.GetInt("WatchedIntro", 0) == 1)
         {
             LoadSceneGame();

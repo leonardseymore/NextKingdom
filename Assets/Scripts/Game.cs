@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 public partial class Game : MonoBehaviour {
 
@@ -62,6 +63,15 @@ public partial class Game : MonoBehaviour {
     #region Lifecycle
     void Awake()
     {
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            SunShafts sunshafts = Camera.main.GetComponent<SunShafts>();
+            sunshafts.enabled = false;
+
+            BloomOptimized bloom = Camera.main.GetComponent<BloomOptimized>();
+            bloom.enabled = false;
+        }
+
         AwakeLevelManagement();
         Spells.Add(SpellType.Kraken, new Spell(SpellType.Kraken, 10, true));
         Spells.Add(SpellType.Alruana, new Spell(SpellType.Alruana, 8, true));
