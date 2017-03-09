@@ -68,7 +68,6 @@ public partial class Game : MonoBehaviour {
         {
             KillGangster(GraveyardGangster);
             yield return SpawnZombieKillGoCR(GraveyardGangster.gameObject);
-            
         }
 
         Interactable = true;
