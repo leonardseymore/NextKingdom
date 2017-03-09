@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 317bf652998043a43903ad804f54799d
-timeCreated: 1487526742
+timeCreated: 1489050783
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -129,9 +129,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 2000
-        width: 300
-        height: 420
+        y: 1052
+        width: 186
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +141,10 @@ TextureImporter:
       name: Joker
       rect:
         serializedVersion: 2
-        x: 300
-        y: 2000
-        width: 300
-        height: 420
+        x: 189
+        y: 1052
+        width: 184
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,10 +154,10 @@ TextureImporter:
       name: Joker_Detail
       rect:
         serializedVersion: 2
-        x: 600
-        y: 2000
-        width: 300
-        height: 420
+        x: 373
+        y: 1052
+        width: 186
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,10 +167,10 @@ TextureImporter:
       name: Krakin
       rect:
         serializedVersion: 2
-        x: 900
-        y: 2000
-        width: 300
-        height: 420
+        x: 561
+        y: 1052
+        width: 184
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,10 +180,10 @@ TextureImporter:
       name: Krakin_Detail
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 2000
-        width: 300
-        height: 420
+        x: 745
+        y: 1052
+        width: 187
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,10 +193,10 @@ TextureImporter:
       name: Alruana
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 2000
-        width: 294
-        height: 420
+        x: 933
+        y: 1052
+        width: 183
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,10 +206,10 @@ TextureImporter:
       name: Alruana_Detail
       rect:
         serializedVersion: 2
-        x: 1800
-        y: 2000
-        width: 300
-        height: 420
+        x: 1118
+        y: 1052
+        width: 185
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,10 +219,10 @@ TextureImporter:
       name: Dracula
       rect:
         serializedVersion: 2
-        x: 2104
-        y: 1999
-        width: 293
-        height: 420
+        x: 1306
+        y: 1052
+        width: 178
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +232,10 @@ TextureImporter:
       name: Spades
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1580
-        width: 300
-        height: 420
+        x: 1
+        y: 790
+        width: 186
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,10 +245,10 @@ TextureImporter:
       name: Spades_K
       rect:
         serializedVersion: 2
-        x: 300
-        y: 1580
-        width: 300
-        height: 420
+        x: 189
+        y: 791
+        width: 185
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: Spades_2
       rect:
         serializedVersion: 2
-        x: 600
-        y: 1580
-        width: 300
-        height: 420
+        x: 374
+        y: 791
+        width: 186
+        height: 260
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,10 +271,10 @@ TextureImporter:
       name: Spades_7
       rect:
         serializedVersion: 2
-        x: 900
-        y: 1580
-        width: 300
-        height: 420
+        x: 560
+        y: 792
+        width: 185
+        height: 260
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,10 +284,10 @@ TextureImporter:
       name: Spades_8
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 1580
-        width: 300
-        height: 420
+        x: 746
+        y: 791
+        width: 186
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,10 +297,10 @@ TextureImporter:
       name: Spades_Q
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 1580
-        width: 300
-        height: 420
+        x: 932
+        y: 790
+        width: 187
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,10 +310,10 @@ TextureImporter:
       name: Spades_J
       rect:
         serializedVersion: 2
-        x: 1804
-        y: 1580
-        width: 290
-        height: 418
+        x: 1123
+        y: 793
+        width: 176
+        height: 257
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -323,23 +323,10 @@ TextureImporter:
       name: Spades_A
       rect:
         serializedVersion: 2
-        x: 2100
-        y: 1585
-        width: 300
-        height: 411
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NextKingdomCards_16
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 1580
-        width: 300
-        height: 420
+        x: 1303
+        y: 792
+        width: 191
+        height: 258
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -349,10 +336,10 @@ TextureImporter:
       name: Clubs
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1160
-        width: 300
-        height: 420
+        x: 1
+        y: 527
+        width: 186
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -362,10 +349,10 @@ TextureImporter:
       name: Clubs_K
       rect:
         serializedVersion: 2
-        x: 300
-        y: 1160
-        width: 300
-        height: 420
+        x: 188
+        y: 532
+        width: 185
+        height: 258
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,10 +362,10 @@ TextureImporter:
       name: Clubs_2
       rect:
         serializedVersion: 2
-        x: 600
-        y: 1160
-        width: 300
-        height: 420
+        x: 373
+        y: 528
+        width: 187
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -388,10 +375,10 @@ TextureImporter:
       name: Clubs_7
       rect:
         serializedVersion: 2
-        x: 900
-        y: 1160
-        width: 300
-        height: 420
+        x: 561
+        y: 529
+        width: 186
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -401,10 +388,10 @@ TextureImporter:
       name: Clubs_8
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 1160
-        width: 300
-        height: 420
+        x: 747
+        y: 529
+        width: 185
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -414,10 +401,10 @@ TextureImporter:
       name: Clubs_Q
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 1160
-        width: 300
-        height: 420
+        x: 932
+        y: 527
+        width: 187
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -427,10 +414,10 @@ TextureImporter:
       name: Clubs_J
       rect:
         serializedVersion: 2
-        x: 1804
-        y: 1160
-        width: 294
-        height: 420
+        x: 1123
+        y: 527
+        width: 177
+        height: 264
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -440,23 +427,10 @@ TextureImporter:
       name: Clubs_A
       rect:
         serializedVersion: 2
-        x: 2100
-        y: 1160
-        width: 300
-        height: 420
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NextKingdomCards_25
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 1160
-        width: 300
-        height: 420
+        x: 1304
+        y: 528
+        width: 187
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -466,10 +440,10 @@ TextureImporter:
       name: Hearts
       rect:
         serializedVersion: 2
-        x: 0
-        y: 740
-        width: 300
-        height: 420
+        x: 2
+        y: 266
+        width: 186
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -479,10 +453,10 @@ TextureImporter:
       name: Hearts_K
       rect:
         serializedVersion: 2
-        x: 300
-        y: 740
-        width: 300
-        height: 420
+        x: 188
+        y: 266
+        width: 186
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -492,10 +466,10 @@ TextureImporter:
       name: Hearts_2
       rect:
         serializedVersion: 2
-        x: 600
-        y: 740
-        width: 300
-        height: 420
+        x: 374
+        y: 266
+        width: 186
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -505,10 +479,10 @@ TextureImporter:
       name: Hearts_7
       rect:
         serializedVersion: 2
-        x: 900
-        y: 740
-        width: 300
-        height: 420
+        x: 561
+        y: 266
+        width: 185
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -518,10 +492,10 @@ TextureImporter:
       name: Hearts_8
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 740
-        width: 300
-        height: 420
+        x: 746
+        y: 266
+        width: 185
+        height: 261
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -531,10 +505,10 @@ TextureImporter:
       name: Hearts_Q
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 740
-        width: 300
-        height: 420
+        x: 932
+        y: 265
+        width: 187
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -544,10 +518,10 @@ TextureImporter:
       name: Hearts_J
       rect:
         serializedVersion: 2
-        x: 1804
-        y: 740
-        width: 292
-        height: 420
+        x: 1125
+        y: 265
+        width: 176
+        height: 259
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -557,23 +531,10 @@ TextureImporter:
       name: Hearts_A
       rect:
         serializedVersion: 2
-        x: 2100
-        y: 740
-        width: 300
-        height: 420
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NextKingdomCards_34
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 740
-        width: 300
-        height: 420
+        x: 1304
+        y: 265
+        width: 187
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -584,9 +545,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 320
-        width: 300
-        height: 420
+        y: 0
+        width: 188
+        height: 266
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,10 +557,10 @@ TextureImporter:
       name: Diamonds_K
       rect:
         serializedVersion: 2
-        x: 300
-        y: 320
-        width: 300
-        height: 420
+        x: 188
+        y: 0
+        width: 186
+        height: 266
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -609,10 +570,10 @@ TextureImporter:
       name: Diamonds_2
       rect:
         serializedVersion: 2
-        x: 600
-        y: 320
-        width: 300
-        height: 420
+        x: 374
+        y: 0
+        width: 186
+        height: 266
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -622,10 +583,10 @@ TextureImporter:
       name: Diamonds_7
       rect:
         serializedVersion: 2
-        x: 900
-        y: 320
-        width: 300
-        height: 420
+        x: 560
+        y: 0
+        width: 186
+        height: 266
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -635,10 +596,10 @@ TextureImporter:
       name: Diamonds_8
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 320
-        width: 300
-        height: 420
+        x: 746
+        y: 0
+        width: 186
+        height: 266
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -648,10 +609,10 @@ TextureImporter:
       name: Diamonds_Q
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 320
-        width: 300
-        height: 420
+        x: 932
+        y: 0
+        width: 187
+        height: 265
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -661,10 +622,10 @@ TextureImporter:
       name: Diamonds_J
       rect:
         serializedVersion: 2
-        x: 1804
-        y: 320
-        width: 293
-        height: 420
+        x: 1123
+        y: 0
+        width: 178
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -674,23 +635,10 @@ TextureImporter:
       name: Diamonds_A
       rect:
         serializedVersion: 2
-        x: 2100
-        y: 320
-        width: 300
-        height: 420
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: NextKingdomCards_43
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 320
-        width: 300
-        height: 420
+        x: 1304
+        y: 3
+        width: 187
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -700,10 +648,10 @@ TextureImporter:
       name: Dracula_Detail
       rect:
         serializedVersion: 2
-        x: 2400
-        y: 2000
-        width: 300
-        height: 418
+        x: 1489
+        y: 1052
+        width: 187
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -713,10 +661,10 @@ TextureImporter:
       name: Tornado
       rect:
         serializedVersion: 2
-        x: 2705
-        y: 2046
-        width: 290
-        height: 329
+        x: 1679
+        y: 1052
+        width: 179
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -726,10 +674,10 @@ TextureImporter:
       name: Tornado_Detail
       rect:
         serializedVersion: 2
-        x: 3000
-        y: 2000
-        width: 300
-        height: 420
+        x: 1862
+        y: 1053
+        width: 186
+        height: 262
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
