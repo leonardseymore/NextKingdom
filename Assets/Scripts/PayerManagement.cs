@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.ImageEffects;
 
 public partial class Game : MonoBehaviour {
     int NumActions = 0;
@@ -37,7 +38,7 @@ public partial class Game : MonoBehaviour {
     {
         get
         {
-            if (Level < MaxLevel)
+            if (Level < LevelRequirement.MaxLevel)
             {
                 return 0;
             }
@@ -304,7 +305,7 @@ public partial class Game : MonoBehaviour {
 
         public void OnMyTurnStarted()
         {
-            if (IsComputer && Game.Level >= LevelRequirement.Potions)
+            if (IsComputer && Game.PotionsUnlocked)
             {
                 ActivateRandomPotions();
             }
@@ -331,8 +332,10 @@ public partial class Game : MonoBehaviour {
 
     void NextPlayer()
     {
+        HideHelp();
         if (CurrentPlayerCards.Count == 0)
         {
+            Interactable = false;
             StartCoroutine(RoundOverCR());
             SetInstruction(CurrentPlayer + " won this round!!!");
         }
@@ -381,6 +384,12 @@ public partial class Game : MonoBehaviour {
     IEnumerator RoundOverCR()
     {
         int score = 0;
+
+        if (CurrentPlayer == Me)
+        {
+            RoundsWon++;
+        }
+
         foreach (Seat seat in Seats)
         {
             if (seat == CurrentPlayer)
@@ -413,6 +422,15 @@ public partial class Game : MonoBehaviour {
                     seat.Eliminated = true;
                     yield return EliminatePlayer(seat);
                     EliminatedPlayers += 1;
+
+                    if (Me.Eliminated && ResurrectionPoints > 0)
+                    {
+                        ResurrectionPoints--;
+                        Me.Eliminated = false;
+                        yield return ResurrectPlayerCR(Me);
+                        EliminatedPlayers -= 1;
+                    }
+
                     break;
                 }
             }
@@ -435,7 +453,19 @@ public partial class Game : MonoBehaviour {
         ParticleSystem ps = Instantiate(EliminationPSPrefab, seat.PlayerAvatar.PortraitImage.transform, false);
         ps.Play();
         AudioPlayExplosion();
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.8f);
+        Time.timeScale = 1f;
+    }
+
+    IEnumerator ResurrectPlayerCR(Seat seat)
+    {
+        ColorCorrectionCurves ccc = Camera.main.GetComponent<ColorCorrectionCurves>();
+        ccc.saturation = 0;
+        Time.timeScale = 0.3f;
+        ParticleSystem ps = Instantiate(ResurrectionPSPrefab, seat.PlayerAvatar.PortraitImage.transform, false);
+        ps.Play();
+        yield return new WaitForSeconds(0.8f);
+        ccc.saturation = 0.8f;
         Time.timeScale = 1f;
     }
 
@@ -523,7 +553,7 @@ public partial class Game : MonoBehaviour {
                 bool endTurn = false;
 
                 bool castSpell = false;
-                if (Level >= LevelRequirement.Spells)
+                if (SpellsUnlocked)
                 {
                     if (!IsSpellCard(WasteCard))
                     {
@@ -536,7 +566,7 @@ public partial class Game : MonoBehaviour {
                     }
                 }
 
-                if (Level >= LevelRequirement.Mafia)
+                if (MafiaUnlocked)
                 {
                     if (!endTurn)
                     {

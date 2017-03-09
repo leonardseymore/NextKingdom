@@ -9,6 +9,7 @@ public class DevManagement : MonoBehaviour {
     public GameObject devPanel;
 
     public InputField levelInput;
+    public InputField xpInput;
 
     private void Awake()
     {
@@ -27,7 +28,14 @@ public class DevManagement : MonoBehaviour {
     public void SetLevel()
     {
         int level = Convert.ToInt32(levelInput.text);
-        game.Xp = level * 9;
+        game.SetLevelAndAdjustXp(level);
+        game.Restart();
+    }
+
+    public void AddXp()
+    {
+        int xp = Convert.ToInt32(xpInput.text);
+        game.Xp += xp;
         game.Restart();
     }
 }

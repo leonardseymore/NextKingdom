@@ -147,6 +147,7 @@ public partial class Game : MonoBehaviour {
         CardHolder parent = tableaus[CurrentPlayerIdx];
         LastDrawnCard = PopCard(parent.name != "Bottom");
         yield return CurrentPlayer.AddCard(LastDrawnCard, false);
+        OnDrawCard();
         NumActions++;
     }
 

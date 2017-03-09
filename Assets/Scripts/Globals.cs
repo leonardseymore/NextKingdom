@@ -32,9 +32,16 @@ public enum Action
 
 public class LevelRequirement
 {
-    public static int Spells = 7;
-    public static int Potions = 8;
-    public static int Mafia = 9;
+    public static readonly int Eight = 2;
+    public static readonly int King = 3;
+    public static readonly int Jack = 4;
+    public static readonly int OffensiveAndDefensive = 5;
+    public static readonly int Seven = 6;
+    public static readonly int Queen = 7;
+    public static readonly int Spells = 8;
+    public static readonly int Potions = 9;
+    public static readonly int Mafia = 10;
+    public static readonly int MaxLevel = 12;
 }
 
 [Serializable]

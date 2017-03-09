@@ -16,6 +16,7 @@ public class WinWindow : MonoBehaviour
     public GameObject graveyard;
     public GameObject spells;
     public GameObject potions;
+    public GameObject mafia;
 
     List<GameObject> allSkills = new List<GameObject>();
 
@@ -40,6 +41,7 @@ public class WinWindow : MonoBehaviour
         allSkills.Add(graveyard);
         allSkills.Add(spells);
         allSkills.Add(potions);
+        allSkills.Add(mafia);
     }
 
     public void Initialize(bool leveledUp, int level, float levelUpProgress, bool won)
@@ -50,7 +52,7 @@ public class WinWindow : MonoBehaviour
         }
         portraitImage.sprite = won ? portraitWonSprite : portraitLostSprite;
         titleText.text = won ? "You won!" : "You lost";
-        levelText.text = "Level " + (level + 1);
+        levelText.text = "Level " + level;
         levelUpProgressImage.fillAmount = leveledUp ? 1 : levelUpProgress;
 
         foreach (GameObject go in allSkills)
@@ -63,30 +65,33 @@ public class WinWindow : MonoBehaviour
         {
             switch (level)
             {
-                case 1:
+                case 2:
                     totems.SetActive(true);
                     break;
-                case 2:
+                case 3:
                     carry.SetActive(true);
                     break;
-                case 3:
+                case 4:
                     rally.SetActive(true);
                     break;
-                case 4:
+                case 5:
                     offensive.SetActive(true);
                     defensive.SetActive(true);
                     break;
-                case 5:
+                case 6:
                     bribe.SetActive(true);
                     break;
-                case 6:
+                case 7:
                     temptress.SetActive(true);
                     graveyard.SetActive(true);
                     break;
-                case 7:
+                case 8:
                     spells.SetActive(true);
                     break;
-                case 8:
+                case 9:
+                    potions.SetActive(true);
+                    break;
+                case 10:
                     potions.SetActive(true);
                     break;
             }

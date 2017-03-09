@@ -39,6 +39,8 @@ public partial class Game : MonoBehaviour {
 
     void OnMyTurn()
     {
+        HelpMe();
+
         uiButtonPanel.SetActive(true);
         if (IsOffensive(WasteCard))
         {
@@ -52,6 +54,9 @@ public partial class Game : MonoBehaviour {
 
     void OnMyTurnEnd()
     {
+        Debug.Log("End My turn");
+        HideHelp();
+        
         if (HighlightedCard != null)
         {
             HighlightedCard.Highlighted = false;
@@ -66,6 +71,8 @@ public partial class Game : MonoBehaviour {
 
     void OnHighlightedCardChanged()
     {
+        HelpMe();
+
         uiButtonBarPickCrazy8.SetActive(HighlightedCard != null && HighlightedCard.Rank == Rank.Eight && WasteCard.Rank != Rank.Eight);
         if (HighlightedCard != null)
         {
@@ -92,6 +99,8 @@ public partial class Game : MonoBehaviour {
 
     public void OnActionButtonClicked()
     {
+        HelpMe();
+
         switch (Action)
         {
             case Action.DrawCard:
@@ -110,6 +119,11 @@ public partial class Game : MonoBehaviour {
                 NextPlayer();
                 break;
         }
+    }
+
+    void OnDrawCard()
+    {
+         HelpMe();
     }
 
     IEnumerator PlaySelectedCard()
@@ -140,6 +154,8 @@ public partial class Game : MonoBehaviour {
         }
         HighlightedCard = null;
         Interactable = true;
+
+        HelpMe();
     }
 
     void UpdateActionButton()

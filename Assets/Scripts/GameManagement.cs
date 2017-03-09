@@ -7,7 +7,12 @@ public partial class Game : MonoBehaviour
 
     void NextRound(bool randomShuffle = true)
     {
-        ShowInterstitial();
+        HideHelp();
+        Interactable = true;
+        if (Level > 2)
+        {
+            ShowInterstitial();
+        }
         uiPlaySpecialBar.Hide();
         AccumulatedCards = 0;
         NumActions = 0;
@@ -36,6 +41,7 @@ public partial class Game : MonoBehaviour
 
     public void Restart()
     {
+        ResurrectionPoints = LoosingStreak;
         LeveledUp = false;
         StopAllCoroutines();
         GameOver = false;

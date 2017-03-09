@@ -1,23 +1,50 @@
-﻿using BitAura;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public partial class Game : MonoBehaviour {
 
+    public GameObject blinkingCursor;
     
-
-    
-    
-    IEnumerator HelpMe()
+    void AwakeHelpManagement()
     {
-        Card card = GetBestCardToPlay(CurrentPlayerCards);
-        if (card == null)
+        blinkingCursor.SetActive(false);
+    }
+    
+    void HelpMe()
+    {
+        if (!IsMyTurn || GamesWon > 0)
         {
-
+            return;
         }
-        yield return null;
+
+        blinkingCursor.SetActive(true);
+
+        if (HighlightedCard != null)
+        {
+            if (HighlightedCard.Rank == Rank.Eight)
+            {
+                blinkingCursor.gameObject.transform.SetParent(uiButtonBarPickCrazy8.transform, false);
+            }
+            else
+            {
+                blinkingCursor.gameObject.transform.SetParent(uiActionButtonText.transform, false);
+            }
+        }
+        else
+        {
+            Card card = GetBestCardToPlay(CurrentPlayerCards);
+            if (card == null)
+            {
+                blinkingCursor.gameObject.transform.SetParent(uiActionButtonText.transform, false);
+            }
+            else
+            {
+                blinkingCursor.gameObject.transform.SetParent(card.transform, false);
+            }
+        }
+    }
+
+    void HideHelp()
+    {
+        blinkingCursor.SetActive(false);
     }
 }

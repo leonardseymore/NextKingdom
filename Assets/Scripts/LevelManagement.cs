@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public partial class Game : MonoBehaviour {
+    public Image levelUpProgressImage;
+    public Text playerLevelText;
+
     bool LeveledUp;
 
     public delegate void LevelUpAction();
@@ -24,6 +27,7 @@ public partial class Game : MonoBehaviour {
                 bool leveledUp = _level < value;
                 _level = value;
                 PlayerPrefs.SetInt("level", value);
+                playerLevelText.text = "Level " + value.ToString();
 
                 if (OnLevelChanged != null)
                 {
@@ -56,9 +60,33 @@ public partial class Game : MonoBehaviour {
             {
                 _xp = value;
                 PlayerPrefs.SetInt("xp", value);
-                Level = _xp / 9;
+                Level = XpToLevel(value);
+                UpdateLevelUpProgress();
             }
         }
+    }
+
+    public int LevelToXp(int level)
+    {
+        if (level == 0)
+        {
+            return 9;
+        }
+        return (int) (4.5f * level * (level + 1));
+    }
+
+    public int XpToLevel(int xp)
+    {
+        if (xp == 0)
+        {
+            return 1;
+        }
+        return (int) (-0.5f + (1/6f) * Mathf.Sqrt(8 * xp + 9));
+    }
+
+    public void SetLevelAndAdjustXp(int level)
+    {
+        Xp = LevelToXp(level);
     }
 
     private int _gamesWon;
@@ -72,9 +100,28 @@ public partial class Game : MonoBehaviour {
         {
             if (_gamesWon != value)
             {
+                LoosingStreak = 0;
                 _gamesWon = value;
                 PlayerPrefs.SetInt("gamesWon", value);
                 Xp += 9;
+            }
+        }
+    }
+
+    private int _roundsWon;
+    public int RoundsWon
+    {
+        get
+        {
+            return _roundsWon;
+        }
+        set
+        {
+            if (_roundsWon != value)
+            {
+                _roundsWon = value;
+                PlayerPrefs.SetInt("roundsWon", value);
+                Xp += 1;
             }
         }
     }
@@ -90,9 +137,29 @@ public partial class Game : MonoBehaviour {
         {
             if (_gamesLost != value)
             {
+                LoosingStreak++;
                 _gamesLost = value;
                 PlayerPrefs.SetInt("gamesLost", value);
                 Xp += 3;
+            }
+        }
+    }
+
+    public int ResurrectionPoints;
+
+    private int _loosingStreak;
+    public int LoosingStreak
+    {
+        get
+        {
+            return _loosingStreak;
+        }
+        set
+        {
+            if (_loosingStreak != value)
+            {
+                _loosingStreak = value;
+                PlayerPrefs.SetInt("loosingStreak", value);
             }
         }
     }
@@ -101,7 +168,7 @@ public partial class Game : MonoBehaviour {
     {
         get
         {
-            return (Xp % 9) / 9f;
+            return (Xp - LevelToXp(Level)) / (float)(LevelToXp(Level + 1) - LevelToXp(Level));
         }
     }
 
@@ -109,13 +176,13 @@ public partial class Game : MonoBehaviour {
     {
         get
         {
-            if (Level < 1)
+            if (Level <= 1)
             {
                 return 4;
-            } else if (Level < 2)
+            } else if (Level <= 2)
             {
                 return 5;
-            } else if (Level < 3)
+            } else if (Level <= 3)
             {
                 return 6;
             }
@@ -125,22 +192,29 @@ public partial class Game : MonoBehaviour {
 
     public void ResetProgress()
     {
-        Xp = 0;
-        Level = 0;
+        Xp = 9;
+        LoosingStreak = 0;
         Restart();
     }
-
-    public int MaxLevel = 20;
 
     public HashSet<Rank> AvailableRanks;
 
     void AwakeLevelManagement()
     {
         _xp = PlayerPrefs.GetInt("xp", 0);
-        _level = PlayerPrefs.GetInt("level", 0);
+        _level = PlayerPrefs.GetInt("level", 1);
         _gamesWon = PlayerPrefs.GetInt("gamesWon", 0);
         _gamesLost = PlayerPrefs.GetInt("gamesLost", 0);
+        _roundsWon = PlayerPrefs.GetInt("roundsWon", 0);
+        _loosingStreak = PlayerPrefs.GetInt("loosingStreak", 0);
+        playerLevelText.text = "Level " + _level.ToString();
         PopulateAvailableCards();
+        UpdateLevelUpProgress();
+    }
+
+    void UpdateLevelUpProgress()
+    {
+        levelUpProgressImage.fillAmount = LevelUpProgress;
     }
 
     void PopulateAvailableCards()
@@ -155,31 +229,55 @@ public partial class Game : MonoBehaviour {
             AvailableRanks.Add(rank);
         }
 
-        if (Level > 0)
+        if (Level >= LevelRequirement.Eight)
         {
             AvailableRanks.Add(Rank.Eight);
         }
-        if (Level > 1)
+        if (Level >= LevelRequirement.King)
         {
             AvailableRanks.Add(Rank.King);
         }
-        if (Level > 2)
+        if (Level >= LevelRequirement.Jack)
         {
             AvailableRanks.Add(Rank.Jack);
         }
-        if (Level > 3)
+        if (Level >= LevelRequirement.OffensiveAndDefensive)
         {
             AvailableRanks.Add(Rank.Two);
             AvailableRanks.Add(Rank.Joker);
             AvailableRanks.Add(Rank.Ace);
         }
-        if (Level > 4)
+        if (Level >= LevelRequirement.Seven)
         {
             AvailableRanks.Add(Rank.Seven);
         }
-        if (Level > 5)
+        if (Level >= LevelRequirement.Queen)
         {
             AvailableRanks.Add(Rank.Queen);
+        }
+    }
+
+    bool SpellsUnlocked
+    {
+        get
+        {
+            return Level >= LevelRequirement.Spells;
+        }
+    }
+
+    bool PotionsUnlocked
+    {
+        get
+        {
+            return Level >= LevelRequirement.Potions;
+        }
+    }
+
+    bool MafiaUnlocked
+    {
+        get
+        {
+            return Level >= LevelRequirement.Mafia;
         }
     }
 }
