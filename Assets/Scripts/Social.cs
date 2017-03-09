@@ -30,6 +30,11 @@ public partial class Game {
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 entries[LEADERBOARD_HIGH_SCORE] = "";
+				entries[ACHIEVEMENT_CAST_DRACULA] = "";
+				entries[ACHIEVEMENT_CAST_KRAKEN] = "";
+				entries[ACHIEVEMENT_SWITCH_POTIONS] = "";
+				entries[ACHIEVEMENT_SPAWN_ZOMBIE] = "";
+				entries[ACHIEVEMENT_WIN_A_GAME] = "";
             }
             return entries;
         }

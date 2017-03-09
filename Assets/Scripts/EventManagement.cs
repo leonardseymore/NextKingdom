@@ -54,7 +54,6 @@ public partial class Game : MonoBehaviour {
 
     void OnMyTurnEnd()
     {
-        Debug.Log("End My turn");
         HideHelp();
         
         if (HighlightedCard != null)
